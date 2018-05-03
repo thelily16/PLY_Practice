@@ -1,0 +1,8 @@
+DRINK		SUGAR/ICE OPTION	SIZE
+===================================================
+1. Greentea	1. Extra (120%)		1. Large
+2. Blacktea	2. Regular (100%)	2. Medium
+3. Bubbletea	3. Less (70%)		3. Small
+4. Oolongtea	4. Half (50%)
+5. Juice	5. Little (30%)
+6. Coffee	6. No (0%)
