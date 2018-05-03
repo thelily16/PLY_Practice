@@ -2,322 +2,515 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Grammar
 
-Rule 0     S' -> order
-Rule 1     order -> DRINK option
-Rule 2     option -> NUMBER Toption SIZE
-Rule 3     option -> NUMBER SIZE Toption
-Rule 4     option -> Toption NUMBER SIZE
-Rule 5     option -> Toption SIZE NUMBER
-Rule 6     option -> SIZE NUMBER Toption
-Rule 7     option -> SIZE Toption NUMBER
-Rule 8     Toption -> Setlevel SUGAR Setlevel ICE
-Rule 9     Toption -> Setlevel ICE Setlevel SUGAR
-Rule 10    Setlevel -> level
-Rule 11    Setlevel -> PERCENT
-Rule 12    level -> LEVEL
+Rule 0     S' -> command
+Rule 1     command -> order command
+Rule 2     command -> order
+Rule 3     command -> menu
+Rule 4     command -> exit
+Rule 5     order -> DRINK COLON option
+Rule 6     option -> NUMBER COMMA Toption COMMA SIZE
+Rule 7     option -> NUMBER COMMA SIZE COMMA Toption
+Rule 8     option -> Toption COMMA NUMBER COMMA SIZE
+Rule 9     option -> Toption COMMA SIZE COMMA NUMBER
+Rule 10    option -> SIZE COMMA NUMBER COMMA Toption
+Rule 11    option -> SIZE COMMA Toption COMMA NUMBER
+Rule 12    Toption -> Setlevel SUGAR COMMA Setlevel ICE
+Rule 13    Toption -> Setlevel ICE COMMA Setlevel SUGAR
+Rule 14    Setlevel -> level
+Rule 15    Setlevel -> PERCENT
+Rule 16    level -> LEVEL
+Rule 17    menu -> MENU
+Rule 18    exit -> EXIT
 
 Terminals, with rules where they appear
 
-DRINK                : 1
-ICE                  : 8 9
-LEVEL                : 12
-NUMBER               : 2 3 4 5 6 7
-PERCENT              : 11
-SIZE                 : 2 3 4 5 6 7
-SUGAR                : 8 9
+COLON                : 5
+COMMA                : 6 6 7 7 8 8 9 9 10 10 11 11 12 13
+DRINK                : 5
+EXIT                 : 18
+ICE                  : 12 13
+LEVEL                : 16
+MENU                 : 17
+NUMBER               : 6 7 8 9 10 11
+PERCENT              : 15
+SIZE                 : 6 7 8 9 10 11
+SUGAR                : 12 13
 error                : 
 
 Nonterminals, with rules where they appear
 
-Setlevel             : 8 8 9 9
-Toption              : 2 3 4 5 6 7
-level                : 10
-option               : 1
-order                : 0
+Setlevel             : 12 12 13 13
+Toption              : 6 7 8 9 10 11
+command              : 1 0
+exit                 : 4
+level                : 14
+menu                 : 3
+option               : 5
+order                : 1 2
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . order
-    (1) order -> . DRINK option
+    (0) S' -> . command
+    (1) command -> . order command
+    (2) command -> . order
+    (3) command -> . menu
+    (4) command -> . exit
+    (5) order -> . DRINK COLON option
+    (17) menu -> . MENU
+    (18) exit -> . EXIT
 
-    DRINK           shift and go to state 2
+    DRINK           shift and go to state 5
+    MENU            shift and go to state 6
+    EXIT            shift and go to state 7
 
-    order                          shift and go to state 1
+    command                        shift and go to state 1
+    order                          shift and go to state 2
+    menu                           shift and go to state 3
+    exit                           shift and go to state 4
 
 state 1
 
-    (0) S' -> order .
+    (0) S' -> command .
 
 
 
 state 2
 
-    (1) order -> DRINK . option
-    (2) option -> . NUMBER Toption SIZE
-    (3) option -> . NUMBER SIZE Toption
-    (4) option -> . Toption NUMBER SIZE
-    (5) option -> . Toption SIZE NUMBER
-    (6) option -> . SIZE NUMBER Toption
-    (7) option -> . SIZE Toption NUMBER
-    (8) Toption -> . Setlevel SUGAR Setlevel ICE
-    (9) Toption -> . Setlevel ICE Setlevel SUGAR
-    (10) Setlevel -> . level
-    (11) Setlevel -> . PERCENT
-    (12) level -> . LEVEL
+    (1) command -> order . command
+    (2) command -> order .
+    (1) command -> . order command
+    (2) command -> . order
+    (3) command -> . menu
+    (4) command -> . exit
+    (5) order -> . DRINK COLON option
+    (17) menu -> . MENU
+    (18) exit -> . EXIT
 
-    NUMBER          shift and go to state 4
-    SIZE            shift and go to state 6
-    PERCENT         shift and go to state 9
-    LEVEL           shift and go to state 10
+    $end            reduce using rule 2 (command -> order .)
+    DRINK           shift and go to state 5
+    MENU            shift and go to state 6
+    EXIT            shift and go to state 7
 
-    option                         shift and go to state 3
-    Toption                        shift and go to state 5
-    Setlevel                       shift and go to state 7
-    level                          shift and go to state 8
+    order                          shift and go to state 2
+    command                        shift and go to state 8
+    menu                           shift and go to state 3
+    exit                           shift and go to state 4
 
 state 3
 
-    (1) order -> DRINK option .
+    (3) command -> menu .
 
-    $end            reduce using rule 1 (order -> DRINK option .)
+    $end            reduce using rule 3 (command -> menu .)
 
 
 state 4
 
-    (2) option -> NUMBER . Toption SIZE
-    (3) option -> NUMBER . SIZE Toption
-    (8) Toption -> . Setlevel SUGAR Setlevel ICE
-    (9) Toption -> . Setlevel ICE Setlevel SUGAR
-    (10) Setlevel -> . level
-    (11) Setlevel -> . PERCENT
-    (12) level -> . LEVEL
+    (4) command -> exit .
 
-    SIZE            shift and go to state 12
-    PERCENT         shift and go to state 9
-    LEVEL           shift and go to state 10
+    $end            reduce using rule 4 (command -> exit .)
 
-    Toption                        shift and go to state 11
-    Setlevel                       shift and go to state 7
-    level                          shift and go to state 8
 
 state 5
 
-    (4) option -> Toption . NUMBER SIZE
-    (5) option -> Toption . SIZE NUMBER
+    (5) order -> DRINK . COLON option
 
-    NUMBER          shift and go to state 13
-    SIZE            shift and go to state 14
+    COLON           shift and go to state 9
 
 
 state 6
 
-    (6) option -> SIZE . NUMBER Toption
-    (7) option -> SIZE . Toption NUMBER
-    (8) Toption -> . Setlevel SUGAR Setlevel ICE
-    (9) Toption -> . Setlevel ICE Setlevel SUGAR
-    (10) Setlevel -> . level
-    (11) Setlevel -> . PERCENT
-    (12) level -> . LEVEL
+    (17) menu -> MENU .
 
-    NUMBER          shift and go to state 15
-    PERCENT         shift and go to state 9
-    LEVEL           shift and go to state 10
+    $end            reduce using rule 17 (menu -> MENU .)
 
-    Toption                        shift and go to state 16
-    Setlevel                       shift and go to state 7
-    level                          shift and go to state 8
 
 state 7
 
-    (8) Toption -> Setlevel . SUGAR Setlevel ICE
-    (9) Toption -> Setlevel . ICE Setlevel SUGAR
+    (18) exit -> EXIT .
 
-    SUGAR           shift and go to state 17
-    ICE             shift and go to state 18
+    $end            reduce using rule 18 (exit -> EXIT .)
 
 
 state 8
 
-    (10) Setlevel -> level .
+    (1) command -> order command .
 
-    SUGAR           reduce using rule 10 (Setlevel -> level .)
-    ICE             reduce using rule 10 (Setlevel -> level .)
+    $end            reduce using rule 1 (command -> order command .)
 
 
 state 9
 
-    (11) Setlevel -> PERCENT .
+    (5) order -> DRINK COLON . option
+    (6) option -> . NUMBER COMMA Toption COMMA SIZE
+    (7) option -> . NUMBER COMMA SIZE COMMA Toption
+    (8) option -> . Toption COMMA NUMBER COMMA SIZE
+    (9) option -> . Toption COMMA SIZE COMMA NUMBER
+    (10) option -> . SIZE COMMA NUMBER COMMA Toption
+    (11) option -> . SIZE COMMA Toption COMMA NUMBER
+    (12) Toption -> . Setlevel SUGAR COMMA Setlevel ICE
+    (13) Toption -> . Setlevel ICE COMMA Setlevel SUGAR
+    (14) Setlevel -> . level
+    (15) Setlevel -> . PERCENT
+    (16) level -> . LEVEL
 
-    SUGAR           reduce using rule 11 (Setlevel -> PERCENT .)
-    ICE             reduce using rule 11 (Setlevel -> PERCENT .)
+    NUMBER          shift and go to state 11
+    SIZE            shift and go to state 13
+    PERCENT         shift and go to state 16
+    LEVEL           shift and go to state 17
 
+    option                         shift and go to state 10
+    Toption                        shift and go to state 12
+    Setlevel                       shift and go to state 14
+    level                          shift and go to state 15
 
 state 10
 
-    (12) level -> LEVEL .
+    (5) order -> DRINK COLON option .
 
-    SUGAR           reduce using rule 12 (level -> LEVEL .)
-    ICE             reduce using rule 12 (level -> LEVEL .)
+    DRINK           reduce using rule 5 (order -> DRINK COLON option .)
+    MENU            reduce using rule 5 (order -> DRINK COLON option .)
+    EXIT            reduce using rule 5 (order -> DRINK COLON option .)
+    $end            reduce using rule 5 (order -> DRINK COLON option .)
 
 
 state 11
 
-    (2) option -> NUMBER Toption . SIZE
+    (6) option -> NUMBER . COMMA Toption COMMA SIZE
+    (7) option -> NUMBER . COMMA SIZE COMMA Toption
 
-    SIZE            shift and go to state 19
+    COMMA           shift and go to state 18
 
 
 state 12
 
-    (3) option -> NUMBER SIZE . Toption
-    (8) Toption -> . Setlevel SUGAR Setlevel ICE
-    (9) Toption -> . Setlevel ICE Setlevel SUGAR
-    (10) Setlevel -> . level
-    (11) Setlevel -> . PERCENT
-    (12) level -> . LEVEL
+    (8) option -> Toption . COMMA NUMBER COMMA SIZE
+    (9) option -> Toption . COMMA SIZE COMMA NUMBER
 
-    PERCENT         shift and go to state 9
-    LEVEL           shift and go to state 10
+    COMMA           shift and go to state 19
 
-    Toption                        shift and go to state 20
-    Setlevel                       shift and go to state 7
-    level                          shift and go to state 8
 
 state 13
 
-    (4) option -> Toption NUMBER . SIZE
+    (10) option -> SIZE . COMMA NUMBER COMMA Toption
+    (11) option -> SIZE . COMMA Toption COMMA NUMBER
 
-    SIZE            shift and go to state 21
+    COMMA           shift and go to state 20
 
 
 state 14
 
-    (5) option -> Toption SIZE . NUMBER
+    (12) Toption -> Setlevel . SUGAR COMMA Setlevel ICE
+    (13) Toption -> Setlevel . ICE COMMA Setlevel SUGAR
 
-    NUMBER          shift and go to state 22
+    SUGAR           shift and go to state 21
+    ICE             shift and go to state 22
 
 
 state 15
 
-    (6) option -> SIZE NUMBER . Toption
-    (8) Toption -> . Setlevel SUGAR Setlevel ICE
-    (9) Toption -> . Setlevel ICE Setlevel SUGAR
-    (10) Setlevel -> . level
-    (11) Setlevel -> . PERCENT
-    (12) level -> . LEVEL
+    (14) Setlevel -> level .
 
-    PERCENT         shift and go to state 9
-    LEVEL           shift and go to state 10
+    SUGAR           reduce using rule 14 (Setlevel -> level .)
+    ICE             reduce using rule 14 (Setlevel -> level .)
 
-    Toption                        shift and go to state 23
-    Setlevel                       shift and go to state 7
-    level                          shift and go to state 8
 
 state 16
 
-    (7) option -> SIZE Toption . NUMBER
+    (15) Setlevel -> PERCENT .
 
-    NUMBER          shift and go to state 24
+    SUGAR           reduce using rule 15 (Setlevel -> PERCENT .)
+    ICE             reduce using rule 15 (Setlevel -> PERCENT .)
 
 
 state 17
 
-    (8) Toption -> Setlevel SUGAR . Setlevel ICE
-    (10) Setlevel -> . level
-    (11) Setlevel -> . PERCENT
-    (12) level -> . LEVEL
+    (16) level -> LEVEL .
 
-    PERCENT         shift and go to state 9
-    LEVEL           shift and go to state 10
+    SUGAR           reduce using rule 16 (level -> LEVEL .)
+    ICE             reduce using rule 16 (level -> LEVEL .)
 
-    Setlevel                       shift and go to state 25
-    level                          shift and go to state 8
 
 state 18
 
-    (9) Toption -> Setlevel ICE . Setlevel SUGAR
-    (10) Setlevel -> . level
-    (11) Setlevel -> . PERCENT
-    (12) level -> . LEVEL
+    (6) option -> NUMBER COMMA . Toption COMMA SIZE
+    (7) option -> NUMBER COMMA . SIZE COMMA Toption
+    (12) Toption -> . Setlevel SUGAR COMMA Setlevel ICE
+    (13) Toption -> . Setlevel ICE COMMA Setlevel SUGAR
+    (14) Setlevel -> . level
+    (15) Setlevel -> . PERCENT
+    (16) level -> . LEVEL
 
-    PERCENT         shift and go to state 9
-    LEVEL           shift and go to state 10
+    SIZE            shift and go to state 24
+    PERCENT         shift and go to state 16
+    LEVEL           shift and go to state 17
 
-    Setlevel                       shift and go to state 26
-    level                          shift and go to state 8
+    Toption                        shift and go to state 23
+    Setlevel                       shift and go to state 14
+    level                          shift and go to state 15
 
 state 19
 
-    (2) option -> NUMBER Toption SIZE .
+    (8) option -> Toption COMMA . NUMBER COMMA SIZE
+    (9) option -> Toption COMMA . SIZE COMMA NUMBER
 
-    $end            reduce using rule 2 (option -> NUMBER Toption SIZE .)
+    NUMBER          shift and go to state 25
+    SIZE            shift and go to state 26
 
 
 state 20
 
-    (3) option -> NUMBER SIZE Toption .
+    (10) option -> SIZE COMMA . NUMBER COMMA Toption
+    (11) option -> SIZE COMMA . Toption COMMA NUMBER
+    (12) Toption -> . Setlevel SUGAR COMMA Setlevel ICE
+    (13) Toption -> . Setlevel ICE COMMA Setlevel SUGAR
+    (14) Setlevel -> . level
+    (15) Setlevel -> . PERCENT
+    (16) level -> . LEVEL
 
-    $end            reduce using rule 3 (option -> NUMBER SIZE Toption .)
+    NUMBER          shift and go to state 27
+    PERCENT         shift and go to state 16
+    LEVEL           shift and go to state 17
 
+    Toption                        shift and go to state 28
+    Setlevel                       shift and go to state 14
+    level                          shift and go to state 15
 
 state 21
 
-    (4) option -> Toption NUMBER SIZE .
+    (12) Toption -> Setlevel SUGAR . COMMA Setlevel ICE
 
-    $end            reduce using rule 4 (option -> Toption NUMBER SIZE .)
+    COMMA           shift and go to state 29
 
 
 state 22
 
-    (5) option -> Toption SIZE NUMBER .
+    (13) Toption -> Setlevel ICE . COMMA Setlevel SUGAR
 
-    $end            reduce using rule 5 (option -> Toption SIZE NUMBER .)
+    COMMA           shift and go to state 30
 
 
 state 23
 
-    (6) option -> SIZE NUMBER Toption .
+    (6) option -> NUMBER COMMA Toption . COMMA SIZE
 
-    $end            reduce using rule 6 (option -> SIZE NUMBER Toption .)
+    COMMA           shift and go to state 31
 
 
 state 24
 
-    (7) option -> SIZE Toption NUMBER .
+    (7) option -> NUMBER COMMA SIZE . COMMA Toption
 
-    $end            reduce using rule 7 (option -> SIZE Toption NUMBER .)
+    COMMA           shift and go to state 32
 
 
 state 25
 
-    (8) Toption -> Setlevel SUGAR Setlevel . ICE
+    (8) option -> Toption COMMA NUMBER . COMMA SIZE
 
-    ICE             shift and go to state 27
+    COMMA           shift and go to state 33
 
 
 state 26
 
-    (9) Toption -> Setlevel ICE Setlevel . SUGAR
+    (9) option -> Toption COMMA SIZE . COMMA NUMBER
 
-    SUGAR           shift and go to state 28
+    COMMA           shift and go to state 34
 
 
 state 27
 
-    (8) Toption -> Setlevel SUGAR Setlevel ICE .
+    (10) option -> SIZE COMMA NUMBER . COMMA Toption
 
-    NUMBER          reduce using rule 8 (Toption -> Setlevel SUGAR Setlevel ICE .)
-    SIZE            reduce using rule 8 (Toption -> Setlevel SUGAR Setlevel ICE .)
-    $end            reduce using rule 8 (Toption -> Setlevel SUGAR Setlevel ICE .)
+    COMMA           shift and go to state 35
 
 
 state 28
 
-    (9) Toption -> Setlevel ICE Setlevel SUGAR .
+    (11) option -> SIZE COMMA Toption . COMMA NUMBER
 
-    NUMBER          reduce using rule 9 (Toption -> Setlevel ICE Setlevel SUGAR .)
-    SIZE            reduce using rule 9 (Toption -> Setlevel ICE Setlevel SUGAR .)
-    $end            reduce using rule 9 (Toption -> Setlevel ICE Setlevel SUGAR .)
+    COMMA           shift and go to state 36
+
+
+state 29
+
+    (12) Toption -> Setlevel SUGAR COMMA . Setlevel ICE
+    (14) Setlevel -> . level
+    (15) Setlevel -> . PERCENT
+    (16) level -> . LEVEL
+
+    PERCENT         shift and go to state 16
+    LEVEL           shift and go to state 17
+
+    Setlevel                       shift and go to state 37
+    level                          shift and go to state 15
+
+state 30
+
+    (13) Toption -> Setlevel ICE COMMA . Setlevel SUGAR
+    (14) Setlevel -> . level
+    (15) Setlevel -> . PERCENT
+    (16) level -> . LEVEL
+
+    PERCENT         shift and go to state 16
+    LEVEL           shift and go to state 17
+
+    Setlevel                       shift and go to state 38
+    level                          shift and go to state 15
+
+state 31
+
+    (6) option -> NUMBER COMMA Toption COMMA . SIZE
+
+    SIZE            shift and go to state 39
+
+
+state 32
+
+    (7) option -> NUMBER COMMA SIZE COMMA . Toption
+    (12) Toption -> . Setlevel SUGAR COMMA Setlevel ICE
+    (13) Toption -> . Setlevel ICE COMMA Setlevel SUGAR
+    (14) Setlevel -> . level
+    (15) Setlevel -> . PERCENT
+    (16) level -> . LEVEL
+
+    PERCENT         shift and go to state 16
+    LEVEL           shift and go to state 17
+
+    Toption                        shift and go to state 40
+    Setlevel                       shift and go to state 14
+    level                          shift and go to state 15
+
+state 33
+
+    (8) option -> Toption COMMA NUMBER COMMA . SIZE
+
+    SIZE            shift and go to state 41
+
+
+state 34
+
+    (9) option -> Toption COMMA SIZE COMMA . NUMBER
+
+    NUMBER          shift and go to state 42
+
+
+state 35
+
+    (10) option -> SIZE COMMA NUMBER COMMA . Toption
+    (12) Toption -> . Setlevel SUGAR COMMA Setlevel ICE
+    (13) Toption -> . Setlevel ICE COMMA Setlevel SUGAR
+    (14) Setlevel -> . level
+    (15) Setlevel -> . PERCENT
+    (16) level -> . LEVEL
+
+    PERCENT         shift and go to state 16
+    LEVEL           shift and go to state 17
+
+    Toption                        shift and go to state 43
+    Setlevel                       shift and go to state 14
+    level                          shift and go to state 15
+
+state 36
+
+    (11) option -> SIZE COMMA Toption COMMA . NUMBER
+
+    NUMBER          shift and go to state 44
+
+
+state 37
+
+    (12) Toption -> Setlevel SUGAR COMMA Setlevel . ICE
+
+    ICE             shift and go to state 45
+
+
+state 38
+
+    (13) Toption -> Setlevel ICE COMMA Setlevel . SUGAR
+
+    SUGAR           shift and go to state 46
+
+
+state 39
+
+    (6) option -> NUMBER COMMA Toption COMMA SIZE .
+
+    DRINK           reduce using rule 6 (option -> NUMBER COMMA Toption COMMA SIZE .)
+    MENU            reduce using rule 6 (option -> NUMBER COMMA Toption COMMA SIZE .)
+    EXIT            reduce using rule 6 (option -> NUMBER COMMA Toption COMMA SIZE .)
+    $end            reduce using rule 6 (option -> NUMBER COMMA Toption COMMA SIZE .)
+
+
+state 40
+
+    (7) option -> NUMBER COMMA SIZE COMMA Toption .
+
+    DRINK           reduce using rule 7 (option -> NUMBER COMMA SIZE COMMA Toption .)
+    MENU            reduce using rule 7 (option -> NUMBER COMMA SIZE COMMA Toption .)
+    EXIT            reduce using rule 7 (option -> NUMBER COMMA SIZE COMMA Toption .)
+    $end            reduce using rule 7 (option -> NUMBER COMMA SIZE COMMA Toption .)
+
+
+state 41
+
+    (8) option -> Toption COMMA NUMBER COMMA SIZE .
+
+    DRINK           reduce using rule 8 (option -> Toption COMMA NUMBER COMMA SIZE .)
+    MENU            reduce using rule 8 (option -> Toption COMMA NUMBER COMMA SIZE .)
+    EXIT            reduce using rule 8 (option -> Toption COMMA NUMBER COMMA SIZE .)
+    $end            reduce using rule 8 (option -> Toption COMMA NUMBER COMMA SIZE .)
+
+
+state 42
+
+    (9) option -> Toption COMMA SIZE COMMA NUMBER .
+
+    DRINK           reduce using rule 9 (option -> Toption COMMA SIZE COMMA NUMBER .)
+    MENU            reduce using rule 9 (option -> Toption COMMA SIZE COMMA NUMBER .)
+    EXIT            reduce using rule 9 (option -> Toption COMMA SIZE COMMA NUMBER .)
+    $end            reduce using rule 9 (option -> Toption COMMA SIZE COMMA NUMBER .)
+
+
+state 43
+
+    (10) option -> SIZE COMMA NUMBER COMMA Toption .
+
+    DRINK           reduce using rule 10 (option -> SIZE COMMA NUMBER COMMA Toption .)
+    MENU            reduce using rule 10 (option -> SIZE COMMA NUMBER COMMA Toption .)
+    EXIT            reduce using rule 10 (option -> SIZE COMMA NUMBER COMMA Toption .)
+    $end            reduce using rule 10 (option -> SIZE COMMA NUMBER COMMA Toption .)
+
+
+state 44
+
+    (11) option -> SIZE COMMA Toption COMMA NUMBER .
+
+    DRINK           reduce using rule 11 (option -> SIZE COMMA Toption COMMA NUMBER .)
+    MENU            reduce using rule 11 (option -> SIZE COMMA Toption COMMA NUMBER .)
+    EXIT            reduce using rule 11 (option -> SIZE COMMA Toption COMMA NUMBER .)
+    $end            reduce using rule 11 (option -> SIZE COMMA Toption COMMA NUMBER .)
+
+
+state 45
+
+    (12) Toption -> Setlevel SUGAR COMMA Setlevel ICE .
+
+    COMMA           reduce using rule 12 (Toption -> Setlevel SUGAR COMMA Setlevel ICE .)
+    DRINK           reduce using rule 12 (Toption -> Setlevel SUGAR COMMA Setlevel ICE .)
+    MENU            reduce using rule 12 (Toption -> Setlevel SUGAR COMMA Setlevel ICE .)
+    EXIT            reduce using rule 12 (Toption -> Setlevel SUGAR COMMA Setlevel ICE .)
+    $end            reduce using rule 12 (Toption -> Setlevel SUGAR COMMA Setlevel ICE .)
+
+
+state 46
+
+    (13) Toption -> Setlevel ICE COMMA Setlevel SUGAR .
+
+    COMMA           reduce using rule 13 (Toption -> Setlevel ICE COMMA Setlevel SUGAR .)
+    DRINK           reduce using rule 13 (Toption -> Setlevel ICE COMMA Setlevel SUGAR .)
+    MENU            reduce using rule 13 (Toption -> Setlevel ICE COMMA Setlevel SUGAR .)
+    EXIT            reduce using rule 13 (Toption -> Setlevel ICE COMMA Setlevel SUGAR .)
+    $end            reduce using rule 13 (Toption -> Setlevel ICE COMMA Setlevel SUGAR .)
 

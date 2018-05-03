@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'DRINK ICE LEVEL NUMBER PERCENT SIZE SUGARorder : DRINK optionoption : NUMBER Toption SIZE \n    | NUMBER SIZE Toption \n    | Toption NUMBER SIZE\n    | Toption SIZE NUMBER\n    | SIZE NUMBER Toption\n    | SIZE Toption NUMBERToption : Setlevel SUGAR Setlevel ICE\n                | Setlevel ICE Setlevel SUGARSetlevel : level\n                | PERCENTlevel : LEVEL'
+_lr_signature = 'COLON COMMA DRINK EXIT ICE LEVEL MENU NUMBER PERCENT SIZE SUGARcommand : order command\n    | order\n    | menu\n    | exitorder : DRINK COLON optionoption : NUMBER COMMA Toption COMMA SIZE \n    | NUMBER COMMA SIZE COMMA Toption \n    | Toption COMMA NUMBER COMMA SIZE\n    | Toption COMMA SIZE COMMA NUMBER\n    | SIZE COMMA NUMBER COMMA Toption\n    | SIZE COMMA Toption COMMA NUMBERToption : Setlevel SUGAR COMMA Setlevel ICE\n                | Setlevel ICE COMMA\u3000Setlevel SUGARSetlevel : level\n                | PERCENTlevel : LEVELmenu : MENUexit : EXIT'
     
-_lr_action_items = {'DRINK':([0,],[2,]),'$end':([1,3,19,20,21,22,23,24,27,28,],[0,-1,-2,-3,-4,-5,-6,-7,-8,-9,]),'NUMBER':([2,5,6,14,16,27,28,],[4,13,15,22,24,-8,-9,]),'SIZE':([2,4,5,11,13,27,28,],[6,12,14,19,21,-8,-9,]),'PERCENT':([2,4,6,12,15,17,18,],[9,9,9,9,9,9,9,]),'LEVEL':([2,4,6,12,15,17,18,],[10,10,10,10,10,10,10,]),'SUGAR':([7,8,9,10,26,],[17,-10,-11,-12,28,]),'ICE':([7,8,9,10,25,],[18,-10,-11,-12,27,]),}
+_lr_action_items = {'DRINK':([0,2,10,39,40,41,42,43,44,45,46,],[5,5,-5,-6,-7,-8,-9,-10,-11,-12,-13,]),'MENU':([0,2,10,39,40,41,42,43,44,45,46,],[6,6,-5,-6,-7,-8,-9,-10,-11,-12,-13,]),'EXIT':([0,2,10,39,40,41,42,43,44,45,46,],[7,7,-5,-6,-7,-8,-9,-10,-11,-12,-13,]),'$end':([1,2,3,4,6,7,8,10,39,40,41,42,43,44,45,46,],[0,-2,-3,-4,-17,-18,-1,-5,-6,-7,-8,-9,-10,-11,-12,-13,]),'COLON':([5,],[9,]),'NUMBER':([9,19,20,34,36,],[11,25,27,42,44,]),'SIZE':([9,18,19,31,33,],[13,24,26,39,41,]),'PERCENT':([9,18,20,29,30,32,35,],[16,16,16,16,16,16,16,]),'LEVEL':([9,18,20,29,30,32,35,],[17,17,17,17,17,17,17,]),'COMMA':([11,12,13,21,22,23,24,25,26,27,28,45,46,],[18,19,20,29,30,31,32,33,34,35,36,-12,-13,]),'SUGAR':([14,15,16,17,38,],[21,-14,-15,-16,46,]),'ICE':([14,15,16,17,37,],[22,-14,-15,-16,45,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'order':([0,],[1,]),'option':([2,],[3,]),'Toption':([2,4,6,12,15,],[5,11,16,20,23,]),'Setlevel':([2,4,6,12,15,17,18,],[7,7,7,7,7,25,26,]),'level':([2,4,6,12,15,17,18,],[8,8,8,8,8,8,8,]),}
+_lr_goto_items = {'command':([0,2,],[1,8,]),'order':([0,2,],[2,2,]),'menu':([0,2,],[3,3,]),'exit':([0,2,],[4,4,]),'option':([9,],[10,]),'Toption':([9,18,20,32,35,],[12,23,28,40,43,]),'Setlevel':([9,18,20,29,30,32,35,],[14,14,14,37,38,14,14,]),'level':([9,18,20,29,30,32,35,],[15,15,15,15,15,15,15,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,17 +26,23 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> order","S'",1,None,None,None),
-  ('order -> DRINK option','order',2,'p_order','yacc_easy_example.py',12),
-  ('option -> NUMBER Toption SIZE','option',3,'p_option','yacc_easy_example.py',16),
-  ('option -> NUMBER SIZE Toption','option',3,'p_option','yacc_easy_example.py',17),
-  ('option -> Toption NUMBER SIZE','option',3,'p_option','yacc_easy_example.py',18),
-  ('option -> Toption SIZE NUMBER','option',3,'p_option','yacc_easy_example.py',19),
-  ('option -> SIZE NUMBER Toption','option',3,'p_option','yacc_easy_example.py',20),
-  ('option -> SIZE Toption NUMBER','option',3,'p_option','yacc_easy_example.py',21),
-  ('Toption -> Setlevel SUGAR Setlevel ICE','Toption',4,'p_Toption','yacc_easy_example.py',36),
-  ('Toption -> Setlevel ICE Setlevel SUGAR','Toption',4,'p_Toption','yacc_easy_example.py',37),
-  ('Setlevel -> level','Setlevel',1,'p_Setlevel','yacc_easy_example.py',45),
-  ('Setlevel -> PERCENT','Setlevel',1,'p_Setlevel','yacc_easy_example.py',46),
-  ('level -> LEVEL','level',1,'p_level','yacc_easy_example.py',51),
+  ("S' -> command","S'",1,None,None,None),
+  ('command -> order command','command',2,'p_command','yacc_easy_example.py',12),
+  ('command -> order','command',1,'p_command','yacc_easy_example.py',13),
+  ('command -> menu','command',1,'p_command','yacc_easy_example.py',14),
+  ('command -> exit','command',1,'p_command','yacc_easy_example.py',15),
+  ('order -> DRINK COLON option','order',3,'p_order','yacc_easy_example.py',18),
+  ('option -> NUMBER COMMA Toption COMMA SIZE','option',5,'p_option','yacc_easy_example.py',22),
+  ('option -> NUMBER COMMA SIZE COMMA Toption','option',5,'p_option','yacc_easy_example.py',23),
+  ('option -> Toption COMMA NUMBER COMMA SIZE','option',5,'p_option','yacc_easy_example.py',24),
+  ('option -> Toption COMMA SIZE COMMA NUMBER','option',5,'p_option','yacc_easy_example.py',25),
+  ('option -> SIZE COMMA NUMBER COMMA Toption','option',5,'p_option','yacc_easy_example.py',26),
+  ('option -> SIZE COMMA Toption COMMA NUMBER','option',5,'p_option','yacc_easy_example.py',27),
+  ('Toption -> Setlevel SUGAR COMMA Setlevel ICE','Toption',5,'p_Toption','yacc_easy_example.py',42),
+  ('Toption -> Setlevel ICE COMMA Setlevel SUGAR','Toption',5,'p_Toption','yacc_easy_example.py',43),
+  ('Setlevel -> level','Setlevel',1,'p_Setlevel','yacc_easy_example.py',51),
+  ('Setlevel -> PERCENT','Setlevel',1,'p_Setlevel','yacc_easy_example.py',52),
+  ('level -> LEVEL','level',1,'p_level','yacc_easy_example.py',57),
+  ('menu -> MENU','menu',1,'p_menu','yacc_easy_example.py',72),
+  ('exit -> EXIT','exit',1,'p_exit','yacc_easy_example.py',77),
 ]
