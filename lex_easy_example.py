@@ -6,7 +6,7 @@ Created on 2018年4月20日
 '''
 import ply.lex as lex
 
-tokens = ['DRINK', 'SUGAR', 'ICE', 'NUMBER', 'LEVEL', 'PERCENT', 'SIZE', 'MENU', 'EXIT', 'COMMA', 'COLON']
+tokens = ['DRINK', 'SUGAR', 'ICE', 'NUMBER', 'LEVEL', 'PERCENT', 'SIZE', 'MENU', 'DONE', 'EXIT']
 
 t_DRINK = r'Greentea|Blacktea|Bubbletea|Oolongtea|Juice|Coffee'
 t_SUGAR = r'Sugar'
@@ -17,8 +17,7 @@ t_PERCENT = r'120%|100%|70%|50%|30%|0%'
 t_NUMBER = r'[0-9]+'
 t_MENU = r'Menu'
 t_EXIT = r'Exit'
-t_COLON = r':'
-t_COMMA = r','
+t_DONE = r'Done'
 t_ignore = ' \n\t'
 
 def t_error(t):

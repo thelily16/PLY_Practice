@@ -4,49 +4,70 @@ Grammar
 
 Rule 0     S' -> command
 Rule 1     command -> order command
-Rule 2     command -> order
-Rule 3     command -> menu
-Rule 4     command -> exit
-Rule 5     order -> DRINK COLON option
-Rule 6     option -> NUMBER COMMA Toption COMMA SIZE
-Rule 7     option -> NUMBER COMMA SIZE COMMA Toption
-Rule 8     option -> Toption COMMA NUMBER COMMA SIZE
-Rule 9     option -> Toption COMMA SIZE COMMA NUMBER
-Rule 10    option -> SIZE COMMA NUMBER COMMA Toption
-Rule 11    option -> SIZE COMMA Toption COMMA NUMBER
-Rule 12    Toption -> Setlevel SUGAR COMMA Setlevel ICE
-Rule 13    Toption -> Setlevel ICE COMMA Setlevel SUGAR
-Rule 14    Setlevel -> level
-Rule 15    Setlevel -> PERCENT
-Rule 16    level -> LEVEL
-Rule 17    menu -> MENU
-Rule 18    exit -> EXIT
+Rule 2     command -> done command
+Rule 3     command -> order
+Rule 4     command -> menu
+Rule 5     command -> exit
+Rule 6     command -> done
+Rule 7     order -> DRINK option
+Rule 8     option -> quantity Doption size
+Rule 9     option -> quantity size Doption
+Rule 10    option -> Doption quantity size
+Rule 11    option -> Doption size quantity
+Rule 12    option -> size quantity Doption
+Rule 13    option -> size Doption quantity
+Rule 14    quantity -> NUMBER
+Rule 15    quantity -> empty
+Rule 16    size -> SIZE
+Rule 17    size -> empty
+Rule 18    Doption -> Soption Ioption
+Rule 19    Doption -> Ioption Soption
+Rule 20    Soption -> Slevel
+Rule 21    Soption -> empty
+Rule 22    Slevel -> Setlevel SUGAR
+Rule 23    Ioption -> Ilevel
+Rule 24    Ioption -> empty
+Rule 25    Ilevel -> Setlevel ICE
+Rule 26    Setlevel -> level
+Rule 27    Setlevel -> PERCENT
+Rule 28    level -> LEVEL
+Rule 29    menu -> MENU
+Rule 30    exit -> EXIT
+Rule 31    done -> DONE
+Rule 32    empty -> <empty>
 
 Terminals, with rules where they appear
 
-COLON                : 5
-COMMA                : 6 6 7 7 8 8 9 9 10 10 11 11 12 13
-DRINK                : 5
-EXIT                 : 18
-ICE                  : 12 13
-LEVEL                : 16
-MENU                 : 17
-NUMBER               : 6 7 8 9 10 11
-PERCENT              : 15
-SIZE                 : 6 7 8 9 10 11
-SUGAR                : 12 13
+DONE                 : 31
+DRINK                : 7
+EXIT                 : 30
+ICE                  : 25
+LEVEL                : 28
+MENU                 : 29
+NUMBER               : 14
+PERCENT              : 27
+SIZE                 : 16
+SUGAR                : 22
 error                : 
 
 Nonterminals, with rules where they appear
 
-Setlevel             : 12 12 13 13
-Toption              : 6 7 8 9 10 11
-command              : 1 0
-exit                 : 4
-level                : 14
-menu                 : 3
-option               : 5
-order                : 1 2
+Doption              : 8 9 10 11 12 13
+Ilevel               : 23
+Ioption              : 18 19
+Setlevel             : 22 25
+Slevel               : 20
+Soption              : 18 19
+command              : 1 2 0
+done                 : 2 6
+empty                : 15 17 21 24
+exit                 : 5
+level                : 26
+menu                 : 4
+option               : 7
+order                : 1 3
+quantity             : 8 9 10 11 12 13
+size                 : 8 9 10 11 12 13
 
 Parsing method: LALR
 
@@ -54,21 +75,26 @@ state 0
 
     (0) S' -> . command
     (1) command -> . order command
-    (2) command -> . order
-    (3) command -> . menu
-    (4) command -> . exit
-    (5) order -> . DRINK COLON option
-    (17) menu -> . MENU
-    (18) exit -> . EXIT
+    (2) command -> . done command
+    (3) command -> . order
+    (4) command -> . menu
+    (5) command -> . exit
+    (6) command -> . done
+    (7) order -> . DRINK option
+    (31) done -> . DONE
+    (29) menu -> . MENU
+    (30) exit -> . EXIT
 
-    DRINK           shift and go to state 5
-    MENU            shift and go to state 6
-    EXIT            shift and go to state 7
+    DRINK           shift and go to state 6
+    DONE            shift and go to state 7
+    MENU            shift and go to state 8
+    EXIT            shift and go to state 9
 
     command                        shift and go to state 1
     order                          shift and go to state 2
-    menu                           shift and go to state 3
-    exit                           shift and go to state 4
+    done                           shift and go to state 3
+    menu                           shift and go to state 4
+    exit                           shift and go to state 5
 
 state 1
 
@@ -79,438 +105,1026 @@ state 1
 state 2
 
     (1) command -> order . command
-    (2) command -> order .
+    (3) command -> order .
     (1) command -> . order command
-    (2) command -> . order
-    (3) command -> . menu
-    (4) command -> . exit
-    (5) order -> . DRINK COLON option
-    (17) menu -> . MENU
-    (18) exit -> . EXIT
+    (2) command -> . done command
+    (3) command -> . order
+    (4) command -> . menu
+    (5) command -> . exit
+    (6) command -> . done
+    (7) order -> . DRINK option
+    (31) done -> . DONE
+    (29) menu -> . MENU
+    (30) exit -> . EXIT
 
-    $end            reduce using rule 2 (command -> order .)
-    DRINK           shift and go to state 5
-    MENU            shift and go to state 6
-    EXIT            shift and go to state 7
+    $end            reduce using rule 3 (command -> order .)
+    DRINK           shift and go to state 6
+    DONE            shift and go to state 7
+    MENU            shift and go to state 8
+    EXIT            shift and go to state 9
 
     order                          shift and go to state 2
-    command                        shift and go to state 8
-    menu                           shift and go to state 3
-    exit                           shift and go to state 4
+    command                        shift and go to state 10
+    done                           shift and go to state 3
+    menu                           shift and go to state 4
+    exit                           shift and go to state 5
 
 state 3
 
-    (3) command -> menu .
+    (2) command -> done . command
+    (6) command -> done .
+    (1) command -> . order command
+    (2) command -> . done command
+    (3) command -> . order
+    (4) command -> . menu
+    (5) command -> . exit
+    (6) command -> . done
+    (7) order -> . DRINK option
+    (31) done -> . DONE
+    (29) menu -> . MENU
+    (30) exit -> . EXIT
 
-    $end            reduce using rule 3 (command -> menu .)
+    $end            reduce using rule 6 (command -> done .)
+    DRINK           shift and go to state 6
+    DONE            shift and go to state 7
+    MENU            shift and go to state 8
+    EXIT            shift and go to state 9
 
+    done                           shift and go to state 3
+    command                        shift and go to state 11
+    order                          shift and go to state 2
+    menu                           shift and go to state 4
+    exit                           shift and go to state 5
 
 state 4
 
-    (4) command -> exit .
+    (4) command -> menu .
 
-    $end            reduce using rule 4 (command -> exit .)
+    $end            reduce using rule 4 (command -> menu .)
 
 
 state 5
 
-    (5) order -> DRINK . COLON option
+    (5) command -> exit .
 
-    COLON           shift and go to state 9
+    $end            reduce using rule 5 (command -> exit .)
 
 
 state 6
 
-    (17) menu -> MENU .
+    (7) order -> DRINK . option
+    (8) option -> . quantity Doption size
+    (9) option -> . quantity size Doption
+    (10) option -> . Doption quantity size
+    (11) option -> . Doption size quantity
+    (12) option -> . size quantity Doption
+    (13) option -> . size Doption quantity
+    (14) quantity -> . NUMBER
+    (15) quantity -> . empty
+    (18) Doption -> . Soption Ioption
+    (19) Doption -> . Ioption Soption
+    (16) size -> . SIZE
+    (17) size -> . empty
+    (32) empty -> .
+    (20) Soption -> . Slevel
+    (21) Soption -> . empty
+    (23) Ioption -> . Ilevel
+    (24) Ioption -> . empty
+    (22) Slevel -> . Setlevel SUGAR
+    (25) Ilevel -> . Setlevel ICE
+    (26) Setlevel -> . level
+    (27) Setlevel -> . PERCENT
+    (28) level -> . LEVEL
 
-    $end            reduce using rule 17 (menu -> MENU .)
+  ! shift/reduce conflict for SIZE resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for PERCENT resolved as shift
+  ! shift/reduce conflict for LEVEL resolved as shift
+    NUMBER          shift and go to state 16
+    SIZE            shift and go to state 20
+    DRINK           reduce using rule 32 (empty -> .)
+    DONE            reduce using rule 32 (empty -> .)
+    MENU            reduce using rule 32 (empty -> .)
+    EXIT            reduce using rule 32 (empty -> .)
+    $end            reduce using rule 32 (empty -> .)
+    PERCENT         shift and go to state 25
+    LEVEL           shift and go to state 26
 
+  ! SIZE            [ reduce using rule 32 (empty -> .) ]
+  ! PERCENT         [ reduce using rule 32 (empty -> .) ]
+  ! LEVEL           [ reduce using rule 32 (empty -> .) ]
+  ! NUMBER          [ reduce using rule 32 (empty -> .) ]
+
+    option                         shift and go to state 12
+    quantity                       shift and go to state 13
+    Doption                        shift and go to state 14
+    size                           shift and go to state 15
+    empty                          shift and go to state 17
+    Soption                        shift and go to state 18
+    Ioption                        shift and go to state 19
+    Slevel                         shift and go to state 21
+    Ilevel                         shift and go to state 22
+    Setlevel                       shift and go to state 23
+    level                          shift and go to state 24
 
 state 7
 
-    (18) exit -> EXIT .
+    (31) done -> DONE .
 
-    $end            reduce using rule 18 (exit -> EXIT .)
+    DRINK           reduce using rule 31 (done -> DONE .)
+    DONE            reduce using rule 31 (done -> DONE .)
+    MENU            reduce using rule 31 (done -> DONE .)
+    EXIT            reduce using rule 31 (done -> DONE .)
+    $end            reduce using rule 31 (done -> DONE .)
 
 
 state 8
+
+    (29) menu -> MENU .
+
+    $end            reduce using rule 29 (menu -> MENU .)
+
+
+state 9
+
+    (30) exit -> EXIT .
+
+    $end            reduce using rule 30 (exit -> EXIT .)
+
+
+state 10
 
     (1) command -> order command .
 
     $end            reduce using rule 1 (command -> order command .)
 
 
-state 9
-
-    (5) order -> DRINK COLON . option
-    (6) option -> . NUMBER COMMA Toption COMMA SIZE
-    (7) option -> . NUMBER COMMA SIZE COMMA Toption
-    (8) option -> . Toption COMMA NUMBER COMMA SIZE
-    (9) option -> . Toption COMMA SIZE COMMA NUMBER
-    (10) option -> . SIZE COMMA NUMBER COMMA Toption
-    (11) option -> . SIZE COMMA Toption COMMA NUMBER
-    (12) Toption -> . Setlevel SUGAR COMMA Setlevel ICE
-    (13) Toption -> . Setlevel ICE COMMA Setlevel SUGAR
-    (14) Setlevel -> . level
-    (15) Setlevel -> . PERCENT
-    (16) level -> . LEVEL
-
-    NUMBER          shift and go to state 11
-    SIZE            shift and go to state 13
-    PERCENT         shift and go to state 16
-    LEVEL           shift and go to state 17
-
-    option                         shift and go to state 10
-    Toption                        shift and go to state 12
-    Setlevel                       shift and go to state 14
-    level                          shift and go to state 15
-
-state 10
-
-    (5) order -> DRINK COLON option .
-
-    DRINK           reduce using rule 5 (order -> DRINK COLON option .)
-    MENU            reduce using rule 5 (order -> DRINK COLON option .)
-    EXIT            reduce using rule 5 (order -> DRINK COLON option .)
-    $end            reduce using rule 5 (order -> DRINK COLON option .)
-
-
 state 11
 
-    (6) option -> NUMBER . COMMA Toption COMMA SIZE
-    (7) option -> NUMBER . COMMA SIZE COMMA Toption
+    (2) command -> done command .
 
-    COMMA           shift and go to state 18
+    $end            reduce using rule 2 (command -> done command .)
 
 
 state 12
 
-    (8) option -> Toption . COMMA NUMBER COMMA SIZE
-    (9) option -> Toption . COMMA SIZE COMMA NUMBER
+    (7) order -> DRINK option .
 
-    COMMA           shift and go to state 19
+    DRINK           reduce using rule 7 (order -> DRINK option .)
+    DONE            reduce using rule 7 (order -> DRINK option .)
+    MENU            reduce using rule 7 (order -> DRINK option .)
+    EXIT            reduce using rule 7 (order -> DRINK option .)
+    $end            reduce using rule 7 (order -> DRINK option .)
 
 
 state 13
 
-    (10) option -> SIZE . COMMA NUMBER COMMA Toption
-    (11) option -> SIZE . COMMA Toption COMMA NUMBER
+    (8) option -> quantity . Doption size
+    (9) option -> quantity . size Doption
+    (18) Doption -> . Soption Ioption
+    (19) Doption -> . Ioption Soption
+    (16) size -> . SIZE
+    (17) size -> . empty
+    (20) Soption -> . Slevel
+    (21) Soption -> . empty
+    (23) Ioption -> . Ilevel
+    (24) Ioption -> . empty
+    (32) empty -> .
+    (22) Slevel -> . Setlevel SUGAR
+    (25) Ilevel -> . Setlevel ICE
+    (26) Setlevel -> . level
+    (27) Setlevel -> . PERCENT
+    (28) level -> . LEVEL
 
-    COMMA           shift and go to state 20
+  ! shift/reduce conflict for SIZE resolved as shift
+  ! shift/reduce conflict for PERCENT resolved as shift
+  ! shift/reduce conflict for LEVEL resolved as shift
+    SIZE            shift and go to state 20
+    DRINK           reduce using rule 32 (empty -> .)
+    DONE            reduce using rule 32 (empty -> .)
+    MENU            reduce using rule 32 (empty -> .)
+    EXIT            reduce using rule 32 (empty -> .)
+    $end            reduce using rule 32 (empty -> .)
+    PERCENT         shift and go to state 25
+    LEVEL           shift and go to state 26
 
+  ! PERCENT         [ reduce using rule 32 (empty -> .) ]
+  ! LEVEL           [ reduce using rule 32 (empty -> .) ]
+  ! SIZE            [ reduce using rule 32 (empty -> .) ]
+
+    Doption                        shift and go to state 27
+    size                           shift and go to state 28
+    Soption                        shift and go to state 18
+    Ioption                        shift and go to state 19
+    empty                          shift and go to state 29
+    Slevel                         shift and go to state 21
+    Ilevel                         shift and go to state 22
+    Setlevel                       shift and go to state 23
+    level                          shift and go to state 24
 
 state 14
 
-    (12) Toption -> Setlevel . SUGAR COMMA Setlevel ICE
-    (13) Toption -> Setlevel . ICE COMMA Setlevel SUGAR
+    (10) option -> Doption . quantity size
+    (11) option -> Doption . size quantity
+    (14) quantity -> . NUMBER
+    (15) quantity -> . empty
+    (16) size -> . SIZE
+    (17) size -> . empty
+    (32) empty -> .
 
-    SUGAR           shift and go to state 21
-    ICE             shift and go to state 22
+  ! shift/reduce conflict for SIZE resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+    NUMBER          shift and go to state 16
+    SIZE            shift and go to state 20
+    DRINK           reduce using rule 32 (empty -> .)
+    DONE            reduce using rule 32 (empty -> .)
+    MENU            reduce using rule 32 (empty -> .)
+    EXIT            reduce using rule 32 (empty -> .)
+    $end            reduce using rule 32 (empty -> .)
 
+  ! SIZE            [ reduce using rule 32 (empty -> .) ]
+  ! NUMBER          [ reduce using rule 32 (empty -> .) ]
+
+    quantity                       shift and go to state 30
+    size                           shift and go to state 31
+    empty                          shift and go to state 32
 
 state 15
 
-    (14) Setlevel -> level .
+    (12) option -> size . quantity Doption
+    (13) option -> size . Doption quantity
+    (14) quantity -> . NUMBER
+    (15) quantity -> . empty
+    (18) Doption -> . Soption Ioption
+    (19) Doption -> . Ioption Soption
+    (32) empty -> .
+    (20) Soption -> . Slevel
+    (21) Soption -> . empty
+    (23) Ioption -> . Ilevel
+    (24) Ioption -> . empty
+    (22) Slevel -> . Setlevel SUGAR
+    (25) Ilevel -> . Setlevel ICE
+    (26) Setlevel -> . level
+    (27) Setlevel -> . PERCENT
+    (28) level -> . LEVEL
 
-    SUGAR           reduce using rule 14 (Setlevel -> level .)
-    ICE             reduce using rule 14 (Setlevel -> level .)
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for PERCENT resolved as shift
+  ! shift/reduce conflict for LEVEL resolved as shift
+    NUMBER          shift and go to state 16
+    DRINK           reduce using rule 32 (empty -> .)
+    DONE            reduce using rule 32 (empty -> .)
+    MENU            reduce using rule 32 (empty -> .)
+    EXIT            reduce using rule 32 (empty -> .)
+    $end            reduce using rule 32 (empty -> .)
+    PERCENT         shift and go to state 25
+    LEVEL           shift and go to state 26
 
+  ! PERCENT         [ reduce using rule 32 (empty -> .) ]
+  ! LEVEL           [ reduce using rule 32 (empty -> .) ]
+  ! NUMBER          [ reduce using rule 32 (empty -> .) ]
+
+    quantity                       shift and go to state 33
+    Doption                        shift and go to state 34
+    empty                          shift and go to state 35
+    Soption                        shift and go to state 18
+    Ioption                        shift and go to state 19
+    Slevel                         shift and go to state 21
+    Ilevel                         shift and go to state 22
+    Setlevel                       shift and go to state 23
+    level                          shift and go to state 24
 
 state 16
 
-    (15) Setlevel -> PERCENT .
+    (14) quantity -> NUMBER .
 
-    SUGAR           reduce using rule 15 (Setlevel -> PERCENT .)
-    ICE             reduce using rule 15 (Setlevel -> PERCENT .)
+    SIZE            reduce using rule 14 (quantity -> NUMBER .)
+    PERCENT         reduce using rule 14 (quantity -> NUMBER .)
+    LEVEL           reduce using rule 14 (quantity -> NUMBER .)
+    DRINK           reduce using rule 14 (quantity -> NUMBER .)
+    DONE            reduce using rule 14 (quantity -> NUMBER .)
+    MENU            reduce using rule 14 (quantity -> NUMBER .)
+    EXIT            reduce using rule 14 (quantity -> NUMBER .)
+    $end            reduce using rule 14 (quantity -> NUMBER .)
 
 
 state 17
 
-    (16) level -> LEVEL .
+    (15) quantity -> empty .
+    (17) size -> empty .
+    (21) Soption -> empty .
+    (24) Ioption -> empty .
 
-    SUGAR           reduce using rule 16 (level -> LEVEL .)
-    ICE             reduce using rule 16 (level -> LEVEL .)
+  ! reduce/reduce conflict for PERCENT resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for LEVEL resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for DRINK resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for DONE resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for MENU resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for EXIT resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for $end resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for PERCENT resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for LEVEL resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for NUMBER resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for SIZE resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for DRINK resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for DONE resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for MENU resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for EXIT resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for $end resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for PERCENT resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for LEVEL resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for NUMBER resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for SIZE resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for DRINK resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for DONE resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for MENU resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for EXIT resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for $end resolved using rule 15 (quantity -> empty .)
+    SIZE            reduce using rule 15 (quantity -> empty .)
+    PERCENT         reduce using rule 15 (quantity -> empty .)
+    LEVEL           reduce using rule 15 (quantity -> empty .)
+    DRINK           reduce using rule 15 (quantity -> empty .)
+    DONE            reduce using rule 15 (quantity -> empty .)
+    MENU            reduce using rule 15 (quantity -> empty .)
+    EXIT            reduce using rule 15 (quantity -> empty .)
+    $end            reduce using rule 15 (quantity -> empty .)
+    NUMBER          reduce using rule 17 (size -> empty .)
+
+  ! PERCENT         [ reduce using rule 17 (size -> empty .) ]
+  ! LEVEL           [ reduce using rule 17 (size -> empty .) ]
+  ! DRINK           [ reduce using rule 17 (size -> empty .) ]
+  ! DONE            [ reduce using rule 17 (size -> empty .) ]
+  ! MENU            [ reduce using rule 17 (size -> empty .) ]
+  ! EXIT            [ reduce using rule 17 (size -> empty .) ]
+  ! $end            [ reduce using rule 17 (size -> empty .) ]
+  ! PERCENT         [ reduce using rule 21 (Soption -> empty .) ]
+  ! LEVEL           [ reduce using rule 21 (Soption -> empty .) ]
+  ! NUMBER          [ reduce using rule 21 (Soption -> empty .) ]
+  ! SIZE            [ reduce using rule 21 (Soption -> empty .) ]
+  ! DRINK           [ reduce using rule 21 (Soption -> empty .) ]
+  ! DONE            [ reduce using rule 21 (Soption -> empty .) ]
+  ! MENU            [ reduce using rule 21 (Soption -> empty .) ]
+  ! EXIT            [ reduce using rule 21 (Soption -> empty .) ]
+  ! $end            [ reduce using rule 21 (Soption -> empty .) ]
+  ! PERCENT         [ reduce using rule 24 (Ioption -> empty .) ]
+  ! LEVEL           [ reduce using rule 24 (Ioption -> empty .) ]
+  ! NUMBER          [ reduce using rule 24 (Ioption -> empty .) ]
+  ! SIZE            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! DRINK           [ reduce using rule 24 (Ioption -> empty .) ]
+  ! DONE            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! MENU            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! EXIT            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! $end            [ reduce using rule 24 (Ioption -> empty .) ]
 
 
 state 18
 
-    (6) option -> NUMBER COMMA . Toption COMMA SIZE
-    (7) option -> NUMBER COMMA . SIZE COMMA Toption
-    (12) Toption -> . Setlevel SUGAR COMMA Setlevel ICE
-    (13) Toption -> . Setlevel ICE COMMA Setlevel SUGAR
-    (14) Setlevel -> . level
-    (15) Setlevel -> . PERCENT
-    (16) level -> . LEVEL
+    (18) Doption -> Soption . Ioption
+    (23) Ioption -> . Ilevel
+    (24) Ioption -> . empty
+    (25) Ilevel -> . Setlevel ICE
+    (32) empty -> .
+    (26) Setlevel -> . level
+    (27) Setlevel -> . PERCENT
+    (28) level -> . LEVEL
 
-    SIZE            shift and go to state 24
-    PERCENT         shift and go to state 16
-    LEVEL           shift and go to state 17
+    NUMBER          reduce using rule 32 (empty -> .)
+    SIZE            reduce using rule 32 (empty -> .)
+    DRINK           reduce using rule 32 (empty -> .)
+    DONE            reduce using rule 32 (empty -> .)
+    MENU            reduce using rule 32 (empty -> .)
+    EXIT            reduce using rule 32 (empty -> .)
+    $end            reduce using rule 32 (empty -> .)
+    PERCENT         shift and go to state 25
+    LEVEL           shift and go to state 26
 
-    Toption                        shift and go to state 23
-    Setlevel                       shift and go to state 14
-    level                          shift and go to state 15
+    Ioption                        shift and go to state 36
+    Ilevel                         shift and go to state 22
+    empty                          shift and go to state 37
+    Setlevel                       shift and go to state 38
+    level                          shift and go to state 24
 
 state 19
 
-    (8) option -> Toption COMMA . NUMBER COMMA SIZE
-    (9) option -> Toption COMMA . SIZE COMMA NUMBER
+    (19) Doption -> Ioption . Soption
+    (20) Soption -> . Slevel
+    (21) Soption -> . empty
+    (22) Slevel -> . Setlevel SUGAR
+    (32) empty -> .
+    (26) Setlevel -> . level
+    (27) Setlevel -> . PERCENT
+    (28) level -> . LEVEL
 
-    NUMBER          shift and go to state 25
-    SIZE            shift and go to state 26
+    NUMBER          reduce using rule 32 (empty -> .)
+    SIZE            reduce using rule 32 (empty -> .)
+    DRINK           reduce using rule 32 (empty -> .)
+    DONE            reduce using rule 32 (empty -> .)
+    MENU            reduce using rule 32 (empty -> .)
+    EXIT            reduce using rule 32 (empty -> .)
+    $end            reduce using rule 32 (empty -> .)
+    PERCENT         shift and go to state 25
+    LEVEL           shift and go to state 26
 
+    Soption                        shift and go to state 39
+    Slevel                         shift and go to state 21
+    empty                          shift and go to state 40
+    Setlevel                       shift and go to state 41
+    level                          shift and go to state 24
 
 state 20
 
-    (10) option -> SIZE COMMA . NUMBER COMMA Toption
-    (11) option -> SIZE COMMA . Toption COMMA NUMBER
-    (12) Toption -> . Setlevel SUGAR COMMA Setlevel ICE
-    (13) Toption -> . Setlevel ICE COMMA Setlevel SUGAR
-    (14) Setlevel -> . level
-    (15) Setlevel -> . PERCENT
-    (16) level -> . LEVEL
+    (16) size -> SIZE .
 
-    NUMBER          shift and go to state 27
-    PERCENT         shift and go to state 16
-    LEVEL           shift and go to state 17
+    NUMBER          reduce using rule 16 (size -> SIZE .)
+    PERCENT         reduce using rule 16 (size -> SIZE .)
+    LEVEL           reduce using rule 16 (size -> SIZE .)
+    DRINK           reduce using rule 16 (size -> SIZE .)
+    DONE            reduce using rule 16 (size -> SIZE .)
+    MENU            reduce using rule 16 (size -> SIZE .)
+    EXIT            reduce using rule 16 (size -> SIZE .)
+    $end            reduce using rule 16 (size -> SIZE .)
 
-    Toption                        shift and go to state 28
-    Setlevel                       shift and go to state 14
-    level                          shift and go to state 15
 
 state 21
 
-    (12) Toption -> Setlevel SUGAR . COMMA Setlevel ICE
+    (20) Soption -> Slevel .
 
-    COMMA           shift and go to state 29
+    PERCENT         reduce using rule 20 (Soption -> Slevel .)
+    LEVEL           reduce using rule 20 (Soption -> Slevel .)
+    NUMBER          reduce using rule 20 (Soption -> Slevel .)
+    SIZE            reduce using rule 20 (Soption -> Slevel .)
+    DRINK           reduce using rule 20 (Soption -> Slevel .)
+    DONE            reduce using rule 20 (Soption -> Slevel .)
+    MENU            reduce using rule 20 (Soption -> Slevel .)
+    EXIT            reduce using rule 20 (Soption -> Slevel .)
+    $end            reduce using rule 20 (Soption -> Slevel .)
 
 
 state 22
 
-    (13) Toption -> Setlevel ICE . COMMA Setlevel SUGAR
+    (23) Ioption -> Ilevel .
 
-    COMMA           shift and go to state 30
+    PERCENT         reduce using rule 23 (Ioption -> Ilevel .)
+    LEVEL           reduce using rule 23 (Ioption -> Ilevel .)
+    NUMBER          reduce using rule 23 (Ioption -> Ilevel .)
+    SIZE            reduce using rule 23 (Ioption -> Ilevel .)
+    DRINK           reduce using rule 23 (Ioption -> Ilevel .)
+    DONE            reduce using rule 23 (Ioption -> Ilevel .)
+    MENU            reduce using rule 23 (Ioption -> Ilevel .)
+    EXIT            reduce using rule 23 (Ioption -> Ilevel .)
+    $end            reduce using rule 23 (Ioption -> Ilevel .)
 
 
 state 23
 
-    (6) option -> NUMBER COMMA Toption . COMMA SIZE
+    (22) Slevel -> Setlevel . SUGAR
+    (25) Ilevel -> Setlevel . ICE
 
-    COMMA           shift and go to state 31
+    SUGAR           shift and go to state 42
+    ICE             shift and go to state 43
 
 
 state 24
 
-    (7) option -> NUMBER COMMA SIZE . COMMA Toption
+    (26) Setlevel -> level .
 
-    COMMA           shift and go to state 32
+    SUGAR           reduce using rule 26 (Setlevel -> level .)
+    ICE             reduce using rule 26 (Setlevel -> level .)
 
 
 state 25
 
-    (8) option -> Toption COMMA NUMBER . COMMA SIZE
+    (27) Setlevel -> PERCENT .
 
-    COMMA           shift and go to state 33
+    SUGAR           reduce using rule 27 (Setlevel -> PERCENT .)
+    ICE             reduce using rule 27 (Setlevel -> PERCENT .)
 
 
 state 26
 
-    (9) option -> Toption COMMA SIZE . COMMA NUMBER
+    (28) level -> LEVEL .
 
-    COMMA           shift and go to state 34
+    SUGAR           reduce using rule 28 (level -> LEVEL .)
+    ICE             reduce using rule 28 (level -> LEVEL .)
 
 
 state 27
 
-    (10) option -> SIZE COMMA NUMBER . COMMA Toption
+    (8) option -> quantity Doption . size
+    (16) size -> . SIZE
+    (17) size -> . empty
+    (32) empty -> .
 
-    COMMA           shift and go to state 35
+    SIZE            shift and go to state 20
+    DRINK           reduce using rule 32 (empty -> .)
+    DONE            reduce using rule 32 (empty -> .)
+    MENU            reduce using rule 32 (empty -> .)
+    EXIT            reduce using rule 32 (empty -> .)
+    $end            reduce using rule 32 (empty -> .)
 
+    size                           shift and go to state 44
+    empty                          shift and go to state 45
 
 state 28
 
-    (11) option -> SIZE COMMA Toption . COMMA NUMBER
+    (9) option -> quantity size . Doption
+    (18) Doption -> . Soption Ioption
+    (19) Doption -> . Ioption Soption
+    (20) Soption -> . Slevel
+    (21) Soption -> . empty
+    (23) Ioption -> . Ilevel
+    (24) Ioption -> . empty
+    (22) Slevel -> . Setlevel SUGAR
+    (32) empty -> .
+    (25) Ilevel -> . Setlevel ICE
+    (26) Setlevel -> . level
+    (27) Setlevel -> . PERCENT
+    (28) level -> . LEVEL
 
-    COMMA           shift and go to state 36
+  ! shift/reduce conflict for PERCENT resolved as shift
+  ! shift/reduce conflict for LEVEL resolved as shift
+    DRINK           reduce using rule 32 (empty -> .)
+    DONE            reduce using rule 32 (empty -> .)
+    MENU            reduce using rule 32 (empty -> .)
+    EXIT            reduce using rule 32 (empty -> .)
+    $end            reduce using rule 32 (empty -> .)
+    PERCENT         shift and go to state 25
+    LEVEL           shift and go to state 26
 
+  ! PERCENT         [ reduce using rule 32 (empty -> .) ]
+  ! LEVEL           [ reduce using rule 32 (empty -> .) ]
+
+    Doption                        shift and go to state 46
+    Soption                        shift and go to state 18
+    Ioption                        shift and go to state 19
+    Slevel                         shift and go to state 21
+    empty                          shift and go to state 47
+    Ilevel                         shift and go to state 22
+    Setlevel                       shift and go to state 23
+    level                          shift and go to state 24
 
 state 29
 
-    (12) Toption -> Setlevel SUGAR COMMA . Setlevel ICE
-    (14) Setlevel -> . level
-    (15) Setlevel -> . PERCENT
-    (16) level -> . LEVEL
+    (17) size -> empty .
+    (21) Soption -> empty .
+    (24) Ioption -> empty .
 
-    PERCENT         shift and go to state 16
-    LEVEL           shift and go to state 17
+  ! reduce/reduce conflict for PERCENT resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for LEVEL resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for DRINK resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for DONE resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for MENU resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for EXIT resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for $end resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for PERCENT resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for LEVEL resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for SIZE resolved using rule 21 (Soption -> empty .)
+  ! reduce/reduce conflict for DRINK resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for DONE resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for MENU resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for EXIT resolved using rule 17 (size -> empty .)
+  ! reduce/reduce conflict for $end resolved using rule 17 (size -> empty .)
+    PERCENT         reduce using rule 17 (size -> empty .)
+    LEVEL           reduce using rule 17 (size -> empty .)
+    DRINK           reduce using rule 17 (size -> empty .)
+    DONE            reduce using rule 17 (size -> empty .)
+    MENU            reduce using rule 17 (size -> empty .)
+    EXIT            reduce using rule 17 (size -> empty .)
+    $end            reduce using rule 17 (size -> empty .)
+    SIZE            reduce using rule 21 (Soption -> empty .)
 
-    Setlevel                       shift and go to state 37
-    level                          shift and go to state 15
+  ! PERCENT         [ reduce using rule 21 (Soption -> empty .) ]
+  ! LEVEL           [ reduce using rule 21 (Soption -> empty .) ]
+  ! DRINK           [ reduce using rule 21 (Soption -> empty .) ]
+  ! DONE            [ reduce using rule 21 (Soption -> empty .) ]
+  ! MENU            [ reduce using rule 21 (Soption -> empty .) ]
+  ! EXIT            [ reduce using rule 21 (Soption -> empty .) ]
+  ! $end            [ reduce using rule 21 (Soption -> empty .) ]
+  ! PERCENT         [ reduce using rule 24 (Ioption -> empty .) ]
+  ! LEVEL           [ reduce using rule 24 (Ioption -> empty .) ]
+  ! SIZE            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! DRINK           [ reduce using rule 24 (Ioption -> empty .) ]
+  ! DONE            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! MENU            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! EXIT            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! $end            [ reduce using rule 24 (Ioption -> empty .) ]
+
 
 state 30
 
-    (13) Toption -> Setlevel ICE COMMA . Setlevel SUGAR
-    (14) Setlevel -> . level
-    (15) Setlevel -> . PERCENT
-    (16) level -> . LEVEL
+    (10) option -> Doption quantity . size
+    (16) size -> . SIZE
+    (17) size -> . empty
+    (32) empty -> .
 
-    PERCENT         shift and go to state 16
-    LEVEL           shift and go to state 17
+    SIZE            shift and go to state 20
+    DRINK           reduce using rule 32 (empty -> .)
+    DONE            reduce using rule 32 (empty -> .)
+    MENU            reduce using rule 32 (empty -> .)
+    EXIT            reduce using rule 32 (empty -> .)
+    $end            reduce using rule 32 (empty -> .)
 
-    Setlevel                       shift and go to state 38
-    level                          shift and go to state 15
+    size                           shift and go to state 48
+    empty                          shift and go to state 45
 
 state 31
 
-    (6) option -> NUMBER COMMA Toption COMMA . SIZE
+    (11) option -> Doption size . quantity
+    (14) quantity -> . NUMBER
+    (15) quantity -> . empty
+    (32) empty -> .
 
-    SIZE            shift and go to state 39
+    NUMBER          shift and go to state 16
+    DRINK           reduce using rule 32 (empty -> .)
+    DONE            reduce using rule 32 (empty -> .)
+    MENU            reduce using rule 32 (empty -> .)
+    EXIT            reduce using rule 32 (empty -> .)
+    $end            reduce using rule 32 (empty -> .)
 
+    quantity                       shift and go to state 49
+    empty                          shift and go to state 50
 
 state 32
 
-    (7) option -> NUMBER COMMA SIZE COMMA . Toption
-    (12) Toption -> . Setlevel SUGAR COMMA Setlevel ICE
-    (13) Toption -> . Setlevel ICE COMMA Setlevel SUGAR
-    (14) Setlevel -> . level
-    (15) Setlevel -> . PERCENT
-    (16) level -> . LEVEL
+    (15) quantity -> empty .
+    (17) size -> empty .
 
-    PERCENT         shift and go to state 16
-    LEVEL           shift and go to state 17
+  ! reduce/reduce conflict for DRINK resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for DONE resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for MENU resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for EXIT resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for $end resolved using rule 15 (quantity -> empty .)
+    SIZE            reduce using rule 15 (quantity -> empty .)
+    DRINK           reduce using rule 15 (quantity -> empty .)
+    DONE            reduce using rule 15 (quantity -> empty .)
+    MENU            reduce using rule 15 (quantity -> empty .)
+    EXIT            reduce using rule 15 (quantity -> empty .)
+    $end            reduce using rule 15 (quantity -> empty .)
+    NUMBER          reduce using rule 17 (size -> empty .)
 
-    Toption                        shift and go to state 40
-    Setlevel                       shift and go to state 14
-    level                          shift and go to state 15
+  ! DRINK           [ reduce using rule 17 (size -> empty .) ]
+  ! DONE            [ reduce using rule 17 (size -> empty .) ]
+  ! MENU            [ reduce using rule 17 (size -> empty .) ]
+  ! EXIT            [ reduce using rule 17 (size -> empty .) ]
+  ! $end            [ reduce using rule 17 (size -> empty .) ]
+
 
 state 33
 
-    (8) option -> Toption COMMA NUMBER COMMA . SIZE
+    (12) option -> size quantity . Doption
+    (18) Doption -> . Soption Ioption
+    (19) Doption -> . Ioption Soption
+    (20) Soption -> . Slevel
+    (21) Soption -> . empty
+    (23) Ioption -> . Ilevel
+    (24) Ioption -> . empty
+    (22) Slevel -> . Setlevel SUGAR
+    (32) empty -> .
+    (25) Ilevel -> . Setlevel ICE
+    (26) Setlevel -> . level
+    (27) Setlevel -> . PERCENT
+    (28) level -> . LEVEL
 
-    SIZE            shift and go to state 41
+  ! shift/reduce conflict for PERCENT resolved as shift
+  ! shift/reduce conflict for LEVEL resolved as shift
+    DRINK           reduce using rule 32 (empty -> .)
+    DONE            reduce using rule 32 (empty -> .)
+    MENU            reduce using rule 32 (empty -> .)
+    EXIT            reduce using rule 32 (empty -> .)
+    $end            reduce using rule 32 (empty -> .)
+    PERCENT         shift and go to state 25
+    LEVEL           shift and go to state 26
 
+  ! PERCENT         [ reduce using rule 32 (empty -> .) ]
+  ! LEVEL           [ reduce using rule 32 (empty -> .) ]
+
+    Doption                        shift and go to state 51
+    Soption                        shift and go to state 18
+    Ioption                        shift and go to state 19
+    Slevel                         shift and go to state 21
+    empty                          shift and go to state 47
+    Ilevel                         shift and go to state 22
+    Setlevel                       shift and go to state 23
+    level                          shift and go to state 24
 
 state 34
 
-    (9) option -> Toption COMMA SIZE COMMA . NUMBER
+    (13) option -> size Doption . quantity
+    (14) quantity -> . NUMBER
+    (15) quantity -> . empty
+    (32) empty -> .
 
-    NUMBER          shift and go to state 42
+    NUMBER          shift and go to state 16
+    DRINK           reduce using rule 32 (empty -> .)
+    DONE            reduce using rule 32 (empty -> .)
+    MENU            reduce using rule 32 (empty -> .)
+    EXIT            reduce using rule 32 (empty -> .)
+    $end            reduce using rule 32 (empty -> .)
 
+    quantity                       shift and go to state 52
+    empty                          shift and go to state 50
 
 state 35
 
-    (10) option -> SIZE COMMA NUMBER COMMA . Toption
-    (12) Toption -> . Setlevel SUGAR COMMA Setlevel ICE
-    (13) Toption -> . Setlevel ICE COMMA Setlevel SUGAR
-    (14) Setlevel -> . level
-    (15) Setlevel -> . PERCENT
-    (16) level -> . LEVEL
+    (15) quantity -> empty .
+    (21) Soption -> empty .
+    (24) Ioption -> empty .
 
-    PERCENT         shift and go to state 16
-    LEVEL           shift and go to state 17
+  ! reduce/reduce conflict for PERCENT resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for LEVEL resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for DRINK resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for DONE resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for MENU resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for EXIT resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for $end resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for PERCENT resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for LEVEL resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for NUMBER resolved using rule 21 (Soption -> empty .)
+  ! reduce/reduce conflict for DRINK resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for DONE resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for MENU resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for EXIT resolved using rule 15 (quantity -> empty .)
+  ! reduce/reduce conflict for $end resolved using rule 15 (quantity -> empty .)
+    PERCENT         reduce using rule 15 (quantity -> empty .)
+    LEVEL           reduce using rule 15 (quantity -> empty .)
+    DRINK           reduce using rule 15 (quantity -> empty .)
+    DONE            reduce using rule 15 (quantity -> empty .)
+    MENU            reduce using rule 15 (quantity -> empty .)
+    EXIT            reduce using rule 15 (quantity -> empty .)
+    $end            reduce using rule 15 (quantity -> empty .)
+    NUMBER          reduce using rule 21 (Soption -> empty .)
 
-    Toption                        shift and go to state 43
-    Setlevel                       shift and go to state 14
-    level                          shift and go to state 15
+  ! PERCENT         [ reduce using rule 21 (Soption -> empty .) ]
+  ! LEVEL           [ reduce using rule 21 (Soption -> empty .) ]
+  ! DRINK           [ reduce using rule 21 (Soption -> empty .) ]
+  ! DONE            [ reduce using rule 21 (Soption -> empty .) ]
+  ! MENU            [ reduce using rule 21 (Soption -> empty .) ]
+  ! EXIT            [ reduce using rule 21 (Soption -> empty .) ]
+  ! $end            [ reduce using rule 21 (Soption -> empty .) ]
+  ! PERCENT         [ reduce using rule 24 (Ioption -> empty .) ]
+  ! LEVEL           [ reduce using rule 24 (Ioption -> empty .) ]
+  ! NUMBER          [ reduce using rule 24 (Ioption -> empty .) ]
+  ! DRINK           [ reduce using rule 24 (Ioption -> empty .) ]
+  ! DONE            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! MENU            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! EXIT            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! $end            [ reduce using rule 24 (Ioption -> empty .) ]
+
 
 state 36
 
-    (11) option -> SIZE COMMA Toption COMMA . NUMBER
+    (18) Doption -> Soption Ioption .
 
-    NUMBER          shift and go to state 44
+    NUMBER          reduce using rule 18 (Doption -> Soption Ioption .)
+    SIZE            reduce using rule 18 (Doption -> Soption Ioption .)
+    DRINK           reduce using rule 18 (Doption -> Soption Ioption .)
+    DONE            reduce using rule 18 (Doption -> Soption Ioption .)
+    MENU            reduce using rule 18 (Doption -> Soption Ioption .)
+    EXIT            reduce using rule 18 (Doption -> Soption Ioption .)
+    $end            reduce using rule 18 (Doption -> Soption Ioption .)
 
 
 state 37
 
-    (12) Toption -> Setlevel SUGAR COMMA Setlevel . ICE
+    (24) Ioption -> empty .
 
-    ICE             shift and go to state 45
+    NUMBER          reduce using rule 24 (Ioption -> empty .)
+    SIZE            reduce using rule 24 (Ioption -> empty .)
+    DRINK           reduce using rule 24 (Ioption -> empty .)
+    DONE            reduce using rule 24 (Ioption -> empty .)
+    MENU            reduce using rule 24 (Ioption -> empty .)
+    EXIT            reduce using rule 24 (Ioption -> empty .)
+    $end            reduce using rule 24 (Ioption -> empty .)
 
 
 state 38
 
-    (13) Toption -> Setlevel ICE COMMA Setlevel . SUGAR
+    (25) Ilevel -> Setlevel . ICE
 
-    SUGAR           shift and go to state 46
+    ICE             shift and go to state 43
 
 
 state 39
 
-    (6) option -> NUMBER COMMA Toption COMMA SIZE .
+    (19) Doption -> Ioption Soption .
 
-    DRINK           reduce using rule 6 (option -> NUMBER COMMA Toption COMMA SIZE .)
-    MENU            reduce using rule 6 (option -> NUMBER COMMA Toption COMMA SIZE .)
-    EXIT            reduce using rule 6 (option -> NUMBER COMMA Toption COMMA SIZE .)
-    $end            reduce using rule 6 (option -> NUMBER COMMA Toption COMMA SIZE .)
+    NUMBER          reduce using rule 19 (Doption -> Ioption Soption .)
+    SIZE            reduce using rule 19 (Doption -> Ioption Soption .)
+    DRINK           reduce using rule 19 (Doption -> Ioption Soption .)
+    DONE            reduce using rule 19 (Doption -> Ioption Soption .)
+    MENU            reduce using rule 19 (Doption -> Ioption Soption .)
+    EXIT            reduce using rule 19 (Doption -> Ioption Soption .)
+    $end            reduce using rule 19 (Doption -> Ioption Soption .)
 
 
 state 40
 
-    (7) option -> NUMBER COMMA SIZE COMMA Toption .
+    (21) Soption -> empty .
 
-    DRINK           reduce using rule 7 (option -> NUMBER COMMA SIZE COMMA Toption .)
-    MENU            reduce using rule 7 (option -> NUMBER COMMA SIZE COMMA Toption .)
-    EXIT            reduce using rule 7 (option -> NUMBER COMMA SIZE COMMA Toption .)
-    $end            reduce using rule 7 (option -> NUMBER COMMA SIZE COMMA Toption .)
+    NUMBER          reduce using rule 21 (Soption -> empty .)
+    SIZE            reduce using rule 21 (Soption -> empty .)
+    DRINK           reduce using rule 21 (Soption -> empty .)
+    DONE            reduce using rule 21 (Soption -> empty .)
+    MENU            reduce using rule 21 (Soption -> empty .)
+    EXIT            reduce using rule 21 (Soption -> empty .)
+    $end            reduce using rule 21 (Soption -> empty .)
 
 
 state 41
 
-    (8) option -> Toption COMMA NUMBER COMMA SIZE .
+    (22) Slevel -> Setlevel . SUGAR
 
-    DRINK           reduce using rule 8 (option -> Toption COMMA NUMBER COMMA SIZE .)
-    MENU            reduce using rule 8 (option -> Toption COMMA NUMBER COMMA SIZE .)
-    EXIT            reduce using rule 8 (option -> Toption COMMA NUMBER COMMA SIZE .)
-    $end            reduce using rule 8 (option -> Toption COMMA NUMBER COMMA SIZE .)
+    SUGAR           shift and go to state 42
 
 
 state 42
 
-    (9) option -> Toption COMMA SIZE COMMA NUMBER .
+    (22) Slevel -> Setlevel SUGAR .
 
-    DRINK           reduce using rule 9 (option -> Toption COMMA SIZE COMMA NUMBER .)
-    MENU            reduce using rule 9 (option -> Toption COMMA SIZE COMMA NUMBER .)
-    EXIT            reduce using rule 9 (option -> Toption COMMA SIZE COMMA NUMBER .)
-    $end            reduce using rule 9 (option -> Toption COMMA SIZE COMMA NUMBER .)
+    PERCENT         reduce using rule 22 (Slevel -> Setlevel SUGAR .)
+    LEVEL           reduce using rule 22 (Slevel -> Setlevel SUGAR .)
+    NUMBER          reduce using rule 22 (Slevel -> Setlevel SUGAR .)
+    SIZE            reduce using rule 22 (Slevel -> Setlevel SUGAR .)
+    DRINK           reduce using rule 22 (Slevel -> Setlevel SUGAR .)
+    DONE            reduce using rule 22 (Slevel -> Setlevel SUGAR .)
+    MENU            reduce using rule 22 (Slevel -> Setlevel SUGAR .)
+    EXIT            reduce using rule 22 (Slevel -> Setlevel SUGAR .)
+    $end            reduce using rule 22 (Slevel -> Setlevel SUGAR .)
 
 
 state 43
 
-    (10) option -> SIZE COMMA NUMBER COMMA Toption .
+    (25) Ilevel -> Setlevel ICE .
 
-    DRINK           reduce using rule 10 (option -> SIZE COMMA NUMBER COMMA Toption .)
-    MENU            reduce using rule 10 (option -> SIZE COMMA NUMBER COMMA Toption .)
-    EXIT            reduce using rule 10 (option -> SIZE COMMA NUMBER COMMA Toption .)
-    $end            reduce using rule 10 (option -> SIZE COMMA NUMBER COMMA Toption .)
+    PERCENT         reduce using rule 25 (Ilevel -> Setlevel ICE .)
+    LEVEL           reduce using rule 25 (Ilevel -> Setlevel ICE .)
+    NUMBER          reduce using rule 25 (Ilevel -> Setlevel ICE .)
+    SIZE            reduce using rule 25 (Ilevel -> Setlevel ICE .)
+    DRINK           reduce using rule 25 (Ilevel -> Setlevel ICE .)
+    DONE            reduce using rule 25 (Ilevel -> Setlevel ICE .)
+    MENU            reduce using rule 25 (Ilevel -> Setlevel ICE .)
+    EXIT            reduce using rule 25 (Ilevel -> Setlevel ICE .)
+    $end            reduce using rule 25 (Ilevel -> Setlevel ICE .)
 
 
 state 44
 
-    (11) option -> SIZE COMMA Toption COMMA NUMBER .
+    (8) option -> quantity Doption size .
 
-    DRINK           reduce using rule 11 (option -> SIZE COMMA Toption COMMA NUMBER .)
-    MENU            reduce using rule 11 (option -> SIZE COMMA Toption COMMA NUMBER .)
-    EXIT            reduce using rule 11 (option -> SIZE COMMA Toption COMMA NUMBER .)
-    $end            reduce using rule 11 (option -> SIZE COMMA Toption COMMA NUMBER .)
+    DRINK           reduce using rule 8 (option -> quantity Doption size .)
+    DONE            reduce using rule 8 (option -> quantity Doption size .)
+    MENU            reduce using rule 8 (option -> quantity Doption size .)
+    EXIT            reduce using rule 8 (option -> quantity Doption size .)
+    $end            reduce using rule 8 (option -> quantity Doption size .)
 
 
 state 45
 
-    (12) Toption -> Setlevel SUGAR COMMA Setlevel ICE .
+    (17) size -> empty .
 
-    COMMA           reduce using rule 12 (Toption -> Setlevel SUGAR COMMA Setlevel ICE .)
-    DRINK           reduce using rule 12 (Toption -> Setlevel SUGAR COMMA Setlevel ICE .)
-    MENU            reduce using rule 12 (Toption -> Setlevel SUGAR COMMA Setlevel ICE .)
-    EXIT            reduce using rule 12 (Toption -> Setlevel SUGAR COMMA Setlevel ICE .)
-    $end            reduce using rule 12 (Toption -> Setlevel SUGAR COMMA Setlevel ICE .)
+    DRINK           reduce using rule 17 (size -> empty .)
+    DONE            reduce using rule 17 (size -> empty .)
+    MENU            reduce using rule 17 (size -> empty .)
+    EXIT            reduce using rule 17 (size -> empty .)
+    $end            reduce using rule 17 (size -> empty .)
 
 
 state 46
 
-    (13) Toption -> Setlevel ICE COMMA Setlevel SUGAR .
+    (9) option -> quantity size Doption .
 
-    COMMA           reduce using rule 13 (Toption -> Setlevel ICE COMMA Setlevel SUGAR .)
-    DRINK           reduce using rule 13 (Toption -> Setlevel ICE COMMA Setlevel SUGAR .)
-    MENU            reduce using rule 13 (Toption -> Setlevel ICE COMMA Setlevel SUGAR .)
-    EXIT            reduce using rule 13 (Toption -> Setlevel ICE COMMA Setlevel SUGAR .)
-    $end            reduce using rule 13 (Toption -> Setlevel ICE COMMA Setlevel SUGAR .)
+    DRINK           reduce using rule 9 (option -> quantity size Doption .)
+    DONE            reduce using rule 9 (option -> quantity size Doption .)
+    MENU            reduce using rule 9 (option -> quantity size Doption .)
+    EXIT            reduce using rule 9 (option -> quantity size Doption .)
+    $end            reduce using rule 9 (option -> quantity size Doption .)
 
+
+state 47
+
+    (21) Soption -> empty .
+    (24) Ioption -> empty .
+
+  ! reduce/reduce conflict for PERCENT resolved using rule 21 (Soption -> empty .)
+  ! reduce/reduce conflict for LEVEL resolved using rule 21 (Soption -> empty .)
+  ! reduce/reduce conflict for DRINK resolved using rule 21 (Soption -> empty .)
+  ! reduce/reduce conflict for DONE resolved using rule 21 (Soption -> empty .)
+  ! reduce/reduce conflict for MENU resolved using rule 21 (Soption -> empty .)
+  ! reduce/reduce conflict for EXIT resolved using rule 21 (Soption -> empty .)
+  ! reduce/reduce conflict for $end resolved using rule 21 (Soption -> empty .)
+    PERCENT         reduce using rule 21 (Soption -> empty .)
+    LEVEL           reduce using rule 21 (Soption -> empty .)
+    DRINK           reduce using rule 21 (Soption -> empty .)
+    DONE            reduce using rule 21 (Soption -> empty .)
+    MENU            reduce using rule 21 (Soption -> empty .)
+    EXIT            reduce using rule 21 (Soption -> empty .)
+    $end            reduce using rule 21 (Soption -> empty .)
+
+  ! PERCENT         [ reduce using rule 24 (Ioption -> empty .) ]
+  ! LEVEL           [ reduce using rule 24 (Ioption -> empty .) ]
+  ! DRINK           [ reduce using rule 24 (Ioption -> empty .) ]
+  ! DONE            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! MENU            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! EXIT            [ reduce using rule 24 (Ioption -> empty .) ]
+  ! $end            [ reduce using rule 24 (Ioption -> empty .) ]
+
+
+state 48
+
+    (10) option -> Doption quantity size .
+
+    DRINK           reduce using rule 10 (option -> Doption quantity size .)
+    DONE            reduce using rule 10 (option -> Doption quantity size .)
+    MENU            reduce using rule 10 (option -> Doption quantity size .)
+    EXIT            reduce using rule 10 (option -> Doption quantity size .)
+    $end            reduce using rule 10 (option -> Doption quantity size .)
+
+
+state 49
+
+    (11) option -> Doption size quantity .
+
+    DRINK           reduce using rule 11 (option -> Doption size quantity .)
+    DONE            reduce using rule 11 (option -> Doption size quantity .)
+    MENU            reduce using rule 11 (option -> Doption size quantity .)
+    EXIT            reduce using rule 11 (option -> Doption size quantity .)
+    $end            reduce using rule 11 (option -> Doption size quantity .)
+
+
+state 50
+
+    (15) quantity -> empty .
+
+    DRINK           reduce using rule 15 (quantity -> empty .)
+    DONE            reduce using rule 15 (quantity -> empty .)
+    MENU            reduce using rule 15 (quantity -> empty .)
+    EXIT            reduce using rule 15 (quantity -> empty .)
+    $end            reduce using rule 15 (quantity -> empty .)
+
+
+state 51
+
+    (12) option -> size quantity Doption .
+
+    DRINK           reduce using rule 12 (option -> size quantity Doption .)
+    DONE            reduce using rule 12 (option -> size quantity Doption .)
+    MENU            reduce using rule 12 (option -> size quantity Doption .)
+    EXIT            reduce using rule 12 (option -> size quantity Doption .)
+    $end            reduce using rule 12 (option -> size quantity Doption .)
+
+
+state 52
+
+    (13) option -> size Doption quantity .
+
+    DRINK           reduce using rule 13 (option -> size Doption quantity .)
+    DONE            reduce using rule 13 (option -> size Doption quantity .)
+    MENU            reduce using rule 13 (option -> size Doption quantity .)
+    EXIT            reduce using rule 13 (option -> size Doption quantity .)
+    $end            reduce using rule 13 (option -> size Doption quantity .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for SIZE in state 6 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 6 resolved as shift
+WARNING: shift/reduce conflict for PERCENT in state 6 resolved as shift
+WARNING: shift/reduce conflict for LEVEL in state 6 resolved as shift
+WARNING: shift/reduce conflict for SIZE in state 13 resolved as shift
+WARNING: shift/reduce conflict for PERCENT in state 13 resolved as shift
+WARNING: shift/reduce conflict for LEVEL in state 13 resolved as shift
+WARNING: shift/reduce conflict for SIZE in state 14 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 14 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 15 resolved as shift
+WARNING: shift/reduce conflict for PERCENT in state 15 resolved as shift
+WARNING: shift/reduce conflict for LEVEL in state 15 resolved as shift
+WARNING: shift/reduce conflict for PERCENT in state 28 resolved as shift
+WARNING: shift/reduce conflict for LEVEL in state 28 resolved as shift
+WARNING: shift/reduce conflict for PERCENT in state 33 resolved as shift
+WARNING: shift/reduce conflict for LEVEL in state 33 resolved as shift
+WARNING: reduce/reduce conflict in state 17 resolved using rule (quantity -> empty)
+WARNING: rejected rule (size -> empty) in state 17
+WARNING: reduce/reduce conflict in state 17 resolved using rule (quantity -> empty)
+WARNING: rejected rule (Soption -> empty) in state 17
+WARNING: reduce/reduce conflict in state 17 resolved using rule (size -> empty)
+WARNING: rejected rule (Soption -> empty) in state 17
+WARNING: reduce/reduce conflict in state 17 resolved using rule (quantity -> empty)
+WARNING: rejected rule (Ioption -> empty) in state 17
+WARNING: reduce/reduce conflict in state 17 resolved using rule (size -> empty)
+WARNING: rejected rule (Ioption -> empty) in state 17
+WARNING: reduce/reduce conflict in state 29 resolved using rule (size -> empty)
+WARNING: rejected rule (Soption -> empty) in state 29
+WARNING: reduce/reduce conflict in state 29 resolved using rule (size -> empty)
+WARNING: rejected rule (Ioption -> empty) in state 29
+WARNING: reduce/reduce conflict in state 29 resolved using rule (Soption -> empty)
+WARNING: rejected rule (Ioption -> empty) in state 29
+WARNING: reduce/reduce conflict in state 32 resolved using rule (quantity -> empty)
+WARNING: rejected rule (size -> empty) in state 32
+WARNING: reduce/reduce conflict in state 35 resolved using rule (quantity -> empty)
+WARNING: rejected rule (Soption -> empty) in state 35
+WARNING: reduce/reduce conflict in state 35 resolved using rule (quantity -> empty)
+WARNING: rejected rule (Ioption -> empty) in state 35
+WARNING: reduce/reduce conflict in state 35 resolved using rule (Soption -> empty)
+WARNING: rejected rule (Ioption -> empty) in state 35
+WARNING: reduce/reduce conflict in state 47 resolved using rule (Soption -> empty)
+WARNING: rejected rule (Ioption -> empty) in state 47

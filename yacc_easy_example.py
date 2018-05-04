@@ -6,51 +6,100 @@ Created on 2018年4月21日
 '''
 import ply.yacc as yacc
 from lex_easy_example import tokens
-from pip._vendor.packaging.requirements import EXTRA     
+import CheckValue as CV
+
+total_price = 0
 
 def p_command(p):
     '''command : order command
+    | done command
     | order
     | menu
-    | exit'''
+    | exit
+    | done'''
 
 def p_order(p):
-    'order : DRINK COLON option'
-    print(p[1] + p[3])
+    'order : DRINK option'
+    
+    global total_price
+    item = str(p[1]).ljust(15) + p[2]
+    item_price = CV.CountPrice(item)
+    print(str(item).ljust(50) + str(item_price).ljust(10))
+    total_price = total_price + item_price
 
 def p_option(p):
-    '''option : NUMBER COMMA Toption COMMA SIZE 
-    | NUMBER COMMA SIZE COMMA Toption 
-    | Toption COMMA NUMBER COMMA SIZE
-    | Toption COMMA SIZE COMMA NUMBER
-    | SIZE COMMA NUMBER COMMA Toption
-    | SIZE COMMA Toption COMMA NUMBER'''
+    '''option : quantity Doption size 
+    | quantity size Doption 
+    | Doption quantity size
+    | Doption size quantity
+    | size quantity Doption
+    | size Doption quantity'''
     
     num = ''
     size = ''
     opt = ''
-    for i in range(1, 6):
+    for i in range(1, 4):
         if p[i].isdigit():
-            num = ' * ' + p[i]
+            num = p[i]
         elif p[i] == 'Large' or p[i] == 'Medium' or p[i] == 'Small':
             size = p[i][0:1]
         else:
             opt = p[i]
-    p[0] = num + '\t ' + size + '\t ' + opt
+    p[0] = num.ljust(5) + size.ljust(5) + opt.ljust(20)
 
-def p_Toption(p):
-    '''Toption : Setlevel SUGAR COMMA Setlevel ICE
-                | Setlevel ICE COMMA　Setlevel SUGAR'''
-    
-    if p[2] == 'Sugar':
-        p[0] = p[1] + ' ' + p[2] + '\t' + p[4] + ' ' + p[5]
+def p_quantity(p):
+    '''quantity : NUMBER
+    | empty'''
+    if p[1] == '':
+        p[0] = '1'
     else:
-        p[0] = p[4] + ' ' + p[5] + ' \t' + p[1] + ' ' + p[2]
+        p[0] = p[1]
+
+def p_size(p):
+    '''size : SIZE
+    | empty'''
+    if p[1] == '':
+        p[0] = 'Large'
+    else:
+        p[0] = p[1]
+
+def p_Doption(p):
+    '''Doption : Soption Ioption
+    | Ioption Soption'''
+    if "Sugar" in p[1]:
+        p[0] = p[1] + '\t' + p[2]
+    else:
+        p[0] = p[2] + '\t' + p[1]
+
+def p_Soption(p):
+    '''Soption : Slevel
+    | empty'''
+    sugar = p[1]
+    if sugar == '':
+        p[0] = '100%'.ljust(5) + 'Sugar'
+    else:
+        p[0] = sugar  
+
+def p_Slevel(p):
+    'Slevel : Setlevel SUGAR'
+    p[0] = str(p[1]).ljust(5)+ str(p[2])
+
+def p_Ioption(p):
+    '''Ioption : Ilevel
+    | empty'''
+    ice = p[1]
+    if ice == '':
+        p[0] = '100%'.ljust(5) + 'Ice'
+    else:
+        p[0] = p[1]
+
+def p_Ilevel(p):
+    'Ilevel : Setlevel ICE'
+    p[0] = str(p[1]).ljust(5) + str(p[2])
 
 def p_Setlevel(p):
     '''Setlevel : level
-                | PERCENT'''
-    
+    | PERCENT'''
     p[0] = p[1]
 
 def p_level(p):
@@ -76,6 +125,16 @@ def p_menu(p):
 def p_exit(p):
     'exit : EXIT'
     exit()
+
+def p_done(p):
+    'done : DONE'
+    global total_price
+    print('Total Price: ' + str(total_price) + '\n')
+    total_price = 0
+
+def p_empty(p):
+    'empty :'
+    p[0] = ''
     
 def p_error(p):
     print('Please make sure your order is correct, '
