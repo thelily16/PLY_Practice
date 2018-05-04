@@ -50,6 +50,7 @@ def p_option(p):
 def p_quantity(p):
     '''quantity : NUMBER
     | empty'''
+    
     if p[1] == '':
         p[0] = '1'
     else:
@@ -58,6 +59,7 @@ def p_quantity(p):
 def p_size(p):
     '''size : SIZE
     | empty'''
+    
     if p[1] == '':
         p[0] = 'Large'
     else:
@@ -66,6 +68,7 @@ def p_size(p):
 def p_Doption(p):
     '''Doption : Soption Ioption
     | Ioption Soption'''
+    
     if "Sugar" in p[1]:
         p[0] = p[1] + '\t' + p[2]
     else:
@@ -74,6 +77,7 @@ def p_Doption(p):
 def p_Soption(p):
     '''Soption : Slevel
     | empty'''
+    
     sugar = p[1]
     if sugar == '':
         p[0] = '100%'.ljust(5) + 'Sugar'
@@ -82,11 +86,13 @@ def p_Soption(p):
 
 def p_Slevel(p):
     'Slevel : Setlevel SUGAR'
+    
     p[0] = str(p[1]).ljust(5)+ str(p[2])
 
 def p_Ioption(p):
     '''Ioption : Ilevel
     | empty'''
+    
     ice = p[1]
     if ice == '':
         p[0] = '100%'.ljust(5) + 'Ice'
@@ -95,15 +101,18 @@ def p_Ioption(p):
 
 def p_Ilevel(p):
     'Ilevel : Setlevel ICE'
+    
     p[0] = str(p[1]).ljust(5) + str(p[2])
 
 def p_Setlevel(p):
     '''Setlevel : level
     | PERCENT'''
+    
     p[0] = p[1]
 
 def p_level(p):
     '''level : LEVEL'''
+    
     if p[1] == 'Extra':
         p[0] = '120%'
     elif p[1] == 'Regular':
@@ -119,26 +128,29 @@ def p_level(p):
 
 def p_menu(p):
     'menu : MENU'
+    
     f = open('./Menu.txt', 'r')
     print(f.read())
 
 def p_exit(p):
     'exit : EXIT'
+    
     exit()
 
 def p_done(p):
     'done : DONE'
+    
     global total_price
     print('Total Price: ' + str(total_price) + '\n')
     total_price = 0
 
 def p_empty(p):
     'empty :'
+    
     p[0] = ''
     
 def p_error(p):
-    print('Please make sure your order is correct, '
-          'it must contain Drink, Quantity, Size, Sugar level and Ice level!')
+    print('Please make sure your order is correct!')
     
 def make_parser():
     parser = yacc.yacc()
