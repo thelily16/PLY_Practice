@@ -23,10 +23,13 @@ def p_order(p):
     
     global total_price
     item = str(p[1]).ljust(15) + p[2]
+    #count the price of item
     item_price = CV.CountPrice(item)
     print(str(item).ljust(50) + str(item_price).ljust(10))
+    #add the price to total price
     total_price = total_price + item_price
 
+#the sequence of option can be random
 def p_option(p):
     '''option : quantity Doption size 
     | quantity size Doption 
@@ -38,6 +41,7 @@ def p_option(p):
     num = ''
     size = ''
     opt = ''
+    #format the option
     for i in range(1, 4):
         if p[i].isdigit():
             num = p[i]
@@ -65,6 +69,7 @@ def p_size(p):
     else:
         p[0] = p[1]
 
+#the sequence of Sugar option and Ice option can be random
 def p_Doption(p):
     '''Doption : Soption Ioption
     | Ioption Soption'''
@@ -112,7 +117,7 @@ def p_Setlevel(p):
 
 def p_level(p):
     '''level : LEVEL'''
-    
+    #change level to percent
     if p[1] == 'Extra':
         p[0] = '120%'
     elif p[1] == 'Regular':
@@ -137,6 +142,7 @@ def p_exit(p):
     
     exit()
 
+# Show total price of the order
 def p_done(p):
     'done : DONE'
     

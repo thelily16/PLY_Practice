@@ -7,10 +7,10 @@ Created on 2018年5月3日
 
 def CountPrice(item):
     order = item.split()
-    #print(order)
     drink = order[0]
     num = order[1]
     size = order[2]
+    # check the price of item
     value = CheckPrice(drink, size) * int(num)
     return value
     
