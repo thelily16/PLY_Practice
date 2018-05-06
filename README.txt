@@ -1,4 +1,4 @@
-# PLY_Practice
+﻿# PLY_Practice
 Tea Shop Order System by Python PLY
 
 Features
@@ -23,7 +23,7 @@ Tokens
 	DRINK: Greentea, Blacktea, Bubbletea, Oolongtea, Juice, Coffee
 	SUGAR: Sugar
 	ICE: Ice
-	NUMBER: 〖{0~9}〗^+
+	NUMBER: {0~9}^+
 	LEVEL: Extra, Less, Half, Little, No
 	PERCENT: 120%, 100%, 70%, 50%, 30%, 0%
 	SIZE: Large, Medium, Small
@@ -76,14 +76,14 @@ Example
 	Input:
 		Menu
 	Output:
-		DRINK			SUGAR/ICE OPTION	SIZE
+		DRINK		SUGAR/ICE OPTION	SIZE
 		===================================================
-		1. Greentea		1. Extra (120%)		1. Large
-		2. Blacktea		2. Regular (100%)	2. Medium
+		1. Greentea	1. Extra (120%)		1. Large
+		2. Blacktea	2. Regular (100%)	2. Medium
 		3. Bubbletea	3. Less (70%)		3. Small
 		4. Oolongtea	4. Half (50%)
-		5. Juice		5. Little (30%)
-		6. Coffee		6. No (0%)
+		5. Juice	5. Little (30%)
+		6. Coffee	6. No (0%)
 
 	Input:
 		Exit
